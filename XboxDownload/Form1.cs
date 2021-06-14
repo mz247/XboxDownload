@@ -32,6 +32,26 @@ namespace XboxDownload
         {
             InitializeComponent();
 
+            //删除过时文件
+            if (Directory.Exists(Application.StartupPath + "\\Store"))
+            {
+                Directory.Delete(Application.StartupPath + "\\Store", true);
+            }
+            if (File.Exists(Application.StartupPath + "\\Games.json"))
+            {
+                File.Delete(Application.StartupPath + "\\Games.json");
+            }
+            if (File.Exists(Application.StartupPath + "\\IP列表(assets1.xboxlive.cn).txt"))
+            {
+                File.Delete(Application.StartupPath + "\\IP列表(assets1.xboxlive.cn).txt");
+            }
+            if (File.Exists(Application.StartupPath + "\\使用说明.docx"))
+            {
+                File.Delete(Application.StartupPath + "\\使用说明.docx");
+            }
+
+
+
             dnsProxy = new DNSProxy(this);
             httpProxy = new HTTPProxy(this);
 
@@ -196,7 +216,7 @@ namespace XboxDownload
                     {
                         using (FileStream fs = File.Create(Application.ExecutablePath + ".md5"))
                         {
-                            Byte[] b = new UTF8Encoding(true).GetBytes(XboxDownload.UpdateFile.GetPathMD5(Application.ExecutablePath));
+                            Byte[] b = new UTF8Encoding(true).GetBytes(UpdateFile.GetPathMD5(Application.ExecutablePath));
                             fs.Write(b, 0, b.Length);
                             fs.Close();
                         }
@@ -751,7 +771,7 @@ namespace XboxDownload
 
             bool update = true;
             string content = string.Empty;
-            FileInfo fi = new FileInfo(Application.StartupPath + "\\IP列表(assets1.xboxlive.cn).txt");
+            FileInfo fi = new FileInfo(Application.StartupPath + "\\IP.assets1.xboxlive.cn.txt");
             if (fi.Exists)
             {
                 update = DateTime.Compare(DateTime.Now, fi.LastWriteTime.AddHours(24)) >= 0;
