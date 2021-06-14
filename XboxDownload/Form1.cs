@@ -32,26 +32,6 @@ namespace XboxDownload
         {
             InitializeComponent();
 
-            //删除过时文件
-            if (Directory.Exists(Application.StartupPath + "\\Store"))
-            {
-                Directory.Delete(Application.StartupPath + "\\Store", true);
-            }
-            if (File.Exists(Application.StartupPath + "\\Games.json"))
-            {
-                File.Delete(Application.StartupPath + "\\Games.json");
-            }
-            if (File.Exists(Application.StartupPath + "\\IP列表(assets1.xboxlive.cn).txt"))
-            {
-                File.Delete(Application.StartupPath + "\\IP列表(assets1.xboxlive.cn).txt");
-            }
-            if (File.Exists(Application.StartupPath + "\\使用说明.docx"))
-            {
-                File.Delete(Application.StartupPath + "\\使用说明.docx");
-            }
-
-
-
             dnsProxy = new DNSProxy(this);
             httpProxy = new HTTPProxy(this);
 
