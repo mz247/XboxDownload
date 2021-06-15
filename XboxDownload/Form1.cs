@@ -479,12 +479,12 @@ namespace XboxDownload
                 bServiceFlag = true;
                 pictureBox1.Image = Properties.Resources.Xbox2;
                 tbDnsIP.Enabled = tbComIP.Enabled = tbCnIP.Enabled = tbAppIP.Enabled = ckbRedirect.Enabled = ckbTruncation.Enabled = ckbLocalUpload.Enabled = tbLocalPath.Enabled = butBrowse.Enabled = cbListenIP.Enabled = ckbDnsService.Enabled = ckbHttpService.Enabled = cbLocalIP.Enabled = ckbMicrosoftStore.Enabled = false;
-                linkTestDns.Enabled = true;
                 butStart.Text = "停止监听";
                 Program.SystemSleep.PreventForCurrentThread(false);
 
                 if (Properties.Settings.Default.DnsService)
                 {
+                    linkTestDns.Enabled = true;
                     string[] ips = Properties.Settings.Default.LocalIP.Split('.');
                     Byte[] ipByte = new byte[4] { byte.Parse(ips[0]), byte.Parse(ips[1]), byte.Parse(ips[2]), byte.Parse(ips[3]) };
                     dicDomain.AddOrUpdate(Environment.MachineName, ipByte, (oldkey, oldvalue) => ipByte);
@@ -1389,7 +1389,7 @@ namespace XboxDownload
         private void ButSniffer_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(tbSnifferUrl.Text)) return;
-            Match result = Regex.Match(tbSnifferUrl.Text, @"/(?<productId>[a-zA-Z0-9]{12})$|/(?<productId>[a-zA-Z0-9]{12})\?|^(?<productId>[a-zA-Z0-9]{12})$");
+            Match result = Regex.Match(tbSnifferUrl.Text.Trim(), @"/(?<productId>[a-zA-Z0-9]{12})$|/(?<productId>[a-zA-Z0-9]{12})\?|^(?<productId>[a-zA-Z0-9]{12})$");
             if (result.Success)
             {
                 pbSniffer.Image = pbSniffer.InitialImage;
@@ -1412,7 +1412,7 @@ namespace XboxDownload
         {
             string url = "https://displaycatalog.mp.microsoft.com/v7.0/products/" + productId + "/?fieldsTemplate=InstallAgent&market=" + market.code + "&languages=" + market.lang + ",neutral";
             SocketPackage socketPackage = ClassWeb.HttpRequest(url, "GET", null, null, true, false, true, null, "application/json", new string[] { "MS-CV: q5E5dXQLOUmztXqT.44.1.3" }, "Install Service", null, null, null, 0, null);
-            if (string.IsNullOrEmpty(socketPackage.Err))
+            if (Regex.IsMatch(socketPackage.Html, @"^{.+}$", RegexOptions.Singleline))
             {
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 var json = js.Deserialize<ClassSniffer.Sniffer>(socketPackage.Html);
@@ -1500,6 +1500,14 @@ namespace XboxDownload
                         butSniffer.Enabled = true;
                     }));
                 }
+            }
+            else
+            {
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show("无法连接服务器，请稍候再试。", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    butSniffer.Enabled = true;
+                }));
             }
         }
 
@@ -1590,6 +1598,11 @@ namespace XboxDownload
                     }
                 }
             }
+        }
+
+        private void LinkLRepartition_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
         }
 
         private void ButConsoleRegionUnlock_Click(object sender, EventArgs e)

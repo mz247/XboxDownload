@@ -31,10 +31,10 @@ namespace XboxDownload
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiMinimizeTray = new System.Windows.Forms.ToolStripMenuItem();
@@ -246,7 +246,7 @@ namespace XboxDownload
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.toolStrip1.ShowItemToolTips = false;
-            this.toolStrip1.Size = new System.Drawing.Size(1478, 33);
+            this.toolStrip1.Size = new System.Drawing.Size(1478, 38);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -259,7 +259,7 @@ namespace XboxDownload
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(64, 28);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(64, 33);
             this.toolStripDropDownButton1.Text = "选项";
             // 
             // tsmiMinimizeTray
@@ -330,10 +330,10 @@ namespace XboxDownload
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 33);
+            this.tabControl1.Location = new System.Drawing.Point(0, 38);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1478, 891);
+            this.tabControl1.Size = new System.Drawing.Size(1478, 886);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -833,9 +833,9 @@ namespace XboxDownload
             // 
             // Col_TTL
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N0";
-            this.Col_TTL.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle13.Format = "N0";
+            this.Col_TTL.DefaultCellStyle = dataGridViewCellStyle13;
             this.Col_TTL.HeaderText = "TTL";
             this.Col_TTL.MinimumWidth = 8;
             this.Col_TTL.Name = "Col_TTL";
@@ -843,10 +843,10 @@ namespace XboxDownload
             // 
             // Col_RoundtripTime
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.Col_RoundtripTime.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle14.Format = "N0";
+            dataGridViewCellStyle14.NullValue = null;
+            this.Col_RoundtripTime.DefaultCellStyle = dataGridViewCellStyle14;
             this.Col_RoundtripTime.HeaderText = "响应时间(ms)";
             this.Col_RoundtripTime.MinimumWidth = 8;
             this.Col_RoundtripTime.Name = "Col_RoundtripTime";
@@ -854,10 +854,10 @@ namespace XboxDownload
             // 
             // Col_Speed
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Col_Speed.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle15.Format = "N2";
+            dataGridViewCellStyle15.NullValue = null;
+            this.Col_Speed.DefaultCellStyle = dataGridViewCellStyle15;
             this.Col_Speed.HeaderText = "下载速度(Mbps)";
             this.Col_Speed.MinimumWidth = 8;
             this.Col_Speed.Name = "Col_Speed";
@@ -1180,7 +1180,7 @@ namespace XboxDownload
             this.tabPage4.Location = new System.Drawing.Point(4, 28);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1470, 859);
+            this.tabPage4.Size = new System.Drawing.Size(1470, 854);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "硬盘";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1211,7 +1211,7 @@ namespace XboxDownload
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox6.Location = new System.Drawing.Point(3, 373);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(1464, 483);
+            this.groupBox6.Size = new System.Drawing.Size(1464, 478);
             this.groupBox6.TabIndex = 2;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "文件信息";
@@ -1477,8 +1477,8 @@ namespace XboxDownload
             // 
             // Col_Size
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.Col_Size.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Col_Size.DefaultCellStyle = dataGridViewCellStyle16;
             this.Col_Size.HeaderText = "容量";
             this.Col_Size.MinimumWidth = 8;
             this.Col_Size.Name = "Col_Size";
@@ -1799,7 +1799,7 @@ namespace XboxDownload
             this.tabPage7.Controls.Add(this.gbDrive);
             this.tabPage7.Location = new System.Drawing.Point(4, 28);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(1470, 859);
+            this.tabPage7.Size = new System.Drawing.Size(1470, 854);
             this.tabPage7.TabIndex = 7;
             this.tabPage7.Text = "工具";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1849,13 +1849,12 @@ namespace XboxDownload
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(667, 20);
+            this.label40.Location = new System.Drawing.Point(797, 24);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(791, 126);
+            this.label40.Size = new System.Drawing.Size(638, 108);
             this.label40.TabIndex = 12;
             this.label40.Text = "使用说明：\r\n1. Xbox 操作系统更新到最新版本\r\n2. 把制作好的出国/回国U盘插入Xbox后保持连线重启主机\r\n3. 在主机 设置-系统-语言和区域 中选" +
-    "择对应的国家或者地区后再次重启主机\r\n\r\n提示: 制作过有启动分区的U盘可能不被Xbox识别，需要用系统磁盘管理删除所有分区后重新分区。\r\nWin10 开始菜单" +
-    "右键，选择磁盘管理，或者下载 DiskGenius 操作。\r\n";
+    "择对应的国家或者地区后再次重启主机\r\n\r\n提示: 有EFI启动分区的U盘可能不被Xbox识别，需要删除所有分区后重新分区。";
             // 
             // labelStatusDrive
             // 
@@ -2012,8 +2011,8 @@ namespace XboxDownload
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1478, 924);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.toolStrip1);
