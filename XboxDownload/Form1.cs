@@ -167,7 +167,7 @@ namespace XboxDownload
             else
             {
                 SocketPackage socketPackage = ClassWeb.HttpRequest(UpdateFile.updateUrl + "/ProductManual.pdf", "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
-                if (string.IsNullOrEmpty(socketPackage.Err) && socketPackage.Headers.StartsWith("HTTP/1.1 200 OK"))
+                if (string.IsNullOrEmpty(socketPackage.Err))
                 {
                     using (FileStream fs = File.Create(file))
                     {
@@ -750,35 +750,23 @@ namespace XboxDownload
             dgvIpList.Rows.Clear();
 
             bool update = true;
-            string content = string.Empty;
             FileInfo fi = new FileInfo(Application.StartupPath + "\\IP.assets1.xboxlive.cn.txt");
-            if (fi.Exists)
-            {
-                update = DateTime.Compare(DateTime.Now, fi.LastWriteTime.AddHours(24)) >= 0;
-                using (StreamReader sr = fi.OpenText())
-                {
-                    content = sr.ReadToEnd();
-                }
-            }
+            if (fi.Exists) update = DateTime.Compare(DateTime.Now, fi.LastWriteTime.AddHours(24)) >= 0;
             if (update)
             {
                 SocketPackage socketPackage = ClassWeb.HttpRequest(UpdateFile.updateUrl + "/IP.assets1.xboxlive.cn.txt", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
                 if (string.IsNullOrEmpty(socketPackage.Err))
                 {
-                    content = socketPackage.Html;
-                    using (FileStream fs = File.Create(Application.StartupPath + "\\IP.assets1.xboxlive.cn.txt"))
+                    using (FileStream fs = fi.Create())
                     {
-                        Byte[] bytes = new UTF8Encoding(true).GetBytes(content);
+                        Byte[] bytes = new UTF8Encoding(true).GetBytes(socketPackage.Html);
                         fs.Write(bytes, 0, bytes.Length);
                         fs.Close();
                     }
                 }
-                else if (string.IsNullOrEmpty(content))
-                {
-                    MessageBox.Show("下载IP出错，请稍候再试。", "在线导入IP", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
             }
+            string content = string.Empty;
+            if (fi.Exists) content = fi.OpenText().ReadToEnd();
 
             List<DataGridViewRow> list = new List<DataGridViewRow>();
             bool telecom1 = ckbTelecom1.Checked;
@@ -1598,11 +1586,6 @@ namespace XboxDownload
                     }
                 }
             }
-        }
-
-        private void LinkLRepartition_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-
         }
 
         private void ButConsoleRegionUnlock_Click(object sender, EventArgs e)

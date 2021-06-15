@@ -42,7 +42,7 @@ namespace XboxDownload
                 tasks[0] = new Task(() =>
                 {
                     SocketPackage sp = ClassWeb.HttpRequest(updateUrl + "/XboxDownload.exe", "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
-                    if (string.IsNullOrEmpty(sp.Err) && sp.Headers.StartsWith("HTTP/1.1 200 OK"))
+                    if (string.IsNullOrEmpty(sp.Err))
                     {
                         using (FileStream fs = new FileStream(filename + ".update", FileMode.Create, FileAccess.Write))
                         {
@@ -55,7 +55,7 @@ namespace XboxDownload
                 tasks[1] = new Task(() =>
                 {
                     SocketPackage sp = ClassWeb.HttpRequest(updateUrl + "/ProductManual.pdf", "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
-                    if (string.IsNullOrEmpty(sp.Err) && sp.Headers.StartsWith("HTTP/1.1 200 OK"))
+                    if (string.IsNullOrEmpty(sp.Err))
                     {
                         using (FileStream fs = new FileStream(Application.StartupPath + "\\ProductManual.pdf", FileMode.Create, FileAccess.Write))
                         {
@@ -68,7 +68,7 @@ namespace XboxDownload
                 tasks[2] = new Task(() =>
                 {
                     SocketPackage sp = ClassWeb.HttpRequest(updateUrl + "/IP.assets1.xboxlive.cn.txt", "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
-                    if (string.IsNullOrEmpty(sp.Err) && sp.Headers.StartsWith("HTTP/1.1 200 OK"))
+                    if (string.IsNullOrEmpty(sp.Err))
                     {
                         using (FileStream fs = new FileStream(Application.StartupPath + "\\IP.assets1.xboxlive.cn.txt", FileMode.Create, FileAccess.Write))
                         {
