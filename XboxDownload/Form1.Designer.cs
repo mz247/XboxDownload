@@ -31,10 +31,10 @@ namespace XboxDownload
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiMinimizeTray = new System.Windows.Forms.ToolStripMenuItem();
@@ -833,9 +833,9 @@ namespace XboxDownload
             // 
             // Col_TTL
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Format = "N0";
-            this.Col_TTL.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle21.Format = "N0";
+            this.Col_TTL.DefaultCellStyle = dataGridViewCellStyle21;
             this.Col_TTL.HeaderText = "TTL";
             this.Col_TTL.MinimumWidth = 8;
             this.Col_TTL.Name = "Col_TTL";
@@ -843,10 +843,10 @@ namespace XboxDownload
             // 
             // Col_RoundtripTime
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "N0";
-            dataGridViewCellStyle6.NullValue = null;
-            this.Col_RoundtripTime.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle22.Format = "N0";
+            dataGridViewCellStyle22.NullValue = null;
+            this.Col_RoundtripTime.DefaultCellStyle = dataGridViewCellStyle22;
             this.Col_RoundtripTime.HeaderText = "响应时间(ms)";
             this.Col_RoundtripTime.MinimumWidth = 8;
             this.Col_RoundtripTime.Name = "Col_RoundtripTime";
@@ -854,10 +854,10 @@ namespace XboxDownload
             // 
             // Col_Speed
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "N2";
-            dataGridViewCellStyle7.NullValue = null;
-            this.Col_Speed.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle23.Format = "N2";
+            dataGridViewCellStyle23.NullValue = null;
+            this.Col_Speed.DefaultCellStyle = dataGridViewCellStyle23;
             this.Col_Speed.HeaderText = "下载速度(Mbps)";
             this.Col_Speed.MinimumWidth = 8;
             this.Col_Speed.Name = "Col_Speed";
@@ -1477,8 +1477,8 @@ namespace XboxDownload
             // 
             // Col_Size
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.Col_Size.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Col_Size.DefaultCellStyle = dataGridViewCellStyle24;
             this.Col_Size.HeaderText = "容量";
             this.Col_Size.MinimumWidth = 8;
             this.Col_Size.Name = "Col_Size";
@@ -1650,7 +1650,7 @@ namespace XboxDownload
             // label46
             // 
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(299, 53);
+            this.label46.Location = new System.Drawing.Point(299, 54);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(44, 18);
             this.label46.TabIndex = 7;
@@ -1659,7 +1659,7 @@ namespace XboxDownload
             // tbSnifferDescription
             // 
             this.tbSnifferDescription.BackColor = System.Drawing.SystemColors.Window;
-            this.tbSnifferDescription.Location = new System.Drawing.Point(349, 50);
+            this.tbSnifferDescription.Location = new System.Drawing.Point(349, 51);
             this.tbSnifferDescription.Multiline = true;
             this.tbSnifferDescription.Name = "tbSnifferDescription";
             this.tbSnifferDescription.ReadOnly = true;
@@ -1849,12 +1849,13 @@ namespace XboxDownload
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(692, 24);
+            this.label40.Location = new System.Drawing.Point(667, 20);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(638, 72);
+            this.label40.Size = new System.Drawing.Size(791, 126);
             this.label40.TabIndex = 12;
-            this.label40.Text = "使用说明：\r\n1. Xbox 更新操作系统版本到 10.0.19041.7771 (xb_flt_2105vb.210506-2030)\r\n2. 把制作好的出国/" +
-    "回国U盘插入Xbox后保持连线重启主机\r\n3. 在主机 设置-系统-语言和区域 中选择对应的国家或者地区后再次重启主机\r\n";
+            this.label40.Text = "使用说明：\r\n1. Xbox 操作系统更新到最新版本\r\n2. 把制作好的出国/回国U盘插入Xbox后保持连线重启主机\r\n3. 在主机 设置-系统-语言和区域 中选" +
+    "择对应的国家或者地区后再次重启主机\r\n\r\n提示: 制作过有启动分区的U盘可能不被Xbox识别，需要用系统磁盘管理删除所有分区后重新分区。\r\nW10系统开始菜单右" +
+    "键，选择磁盘管理，或者下载 DiskGenius 操作。\r\n";
             // 
             // labelStatusDrive
             // 
