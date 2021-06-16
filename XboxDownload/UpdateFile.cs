@@ -21,7 +21,7 @@ namespace XboxDownload
             SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
             if (!string.IsNullOrEmpty(socketPackage.Err))
             {
-                //防止被墙
+                //防止被墙 ghproxy.com, mirror.ghproxy.com
                 exeFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/XboxDownload.exe");
                 pdfFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/ProductManual.pdf");
                 txtFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/IP.assets1.xboxlive.cn.txt");
