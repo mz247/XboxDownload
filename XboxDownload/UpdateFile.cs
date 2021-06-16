@@ -15,30 +15,57 @@ namespace XboxDownload
 
         public static void Start(bool autoupdate)
         {
-            string exeFile = updateUrl + "/XboxDownload.exe";
-            string pdfFile = updateUrl + "/ProductManual.pdf";
-            string txtFile = updateUrl + "/IP.assets1.xboxlive.cn.txt";
-            SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
-            if (!string.IsNullOrEmpty(socketPackage.Err))
+            string md5 = string.Empty;
+            Task[] tasks = new Task[3];
+            tasks[0] = new Task(() =>
             {
-                //防止被墙 ghproxy.com, mirror.ghproxy.com
-                exeFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/XboxDownload.exe");
-                pdfFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/ProductManual.pdf");
-                txtFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/IP.assets1.xboxlive.cn.txt");
-                socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
-            }
-            string md5 = socketPackage.Html;
-            if (!Regex.IsMatch(md5, @"^[A-Z0-9]{32}$"))
-            {
-                if (!autoupdate)
+                string exeFile = updateUrl + "/XboxDownload.exe";
+                string pdfFile = updateUrl + "/ProductManual.pdf";
+                string txtFile = updateUrl + "/IP.assets1.xboxlive.cn.txt";
+                SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+                if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
                 {
-                    Application.OpenForms[0].Invoke(new MethodInvoker(() =>
-                    {
-                        MessageBox.Show("检查更新出错，请稍候再试。", "软件更新", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }));
+                    md5 = socketPackage.Html;
+                    Update(autoupdate, md5, exeFile, pdfFile, txtFile);
                 }
-                return;
+            });
+            tasks[1] = new Task(() =>
+            {
+                string exeFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/XboxDownload.exe");
+                string pdfFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/ProductManual.pdf");
+                string txtFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/IP.assets1.xboxlive.cn.txt");
+                SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+                if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
+                {
+                    md5 = socketPackage.Html;
+                    Update(autoupdate, md5, exeFile, pdfFile, txtFile);
+                }
+            });
+            tasks[2] = new Task(() =>
+            {
+                string exeFile = "https://mirror.ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/XboxDownload.exe");
+                string pdfFile = "https://mirror.ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/ProductManual.pdf");
+                string txtFile = "https://mirror.ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/IP.assets1.xboxlive.cn.txt");
+                SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+                if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
+                {
+                    md5 = socketPackage.Html;
+                    Update(autoupdate, md5, exeFile, pdfFile, txtFile);
+                }
+            });
+            Array.ForEach(tasks, x => x.Start());
+            Task.WaitAll(tasks);
+            if (string.IsNullOrEmpty(md5) && !autoupdate)
+            {
+                Application.OpenForms[0].Invoke(new MethodInvoker(() =>
+                {
+                    MessageBox.Show("检查更新出错，请稍候再试。", "软件更新", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
             }
+        }
+
+        private static void Update(bool autoupdate, string md5, string exeFile, string pdfFile, string txtFile)
+        {
             if (!string.Equals(md5, GetPathMD5(Application.ExecutablePath)))
             {
                 bool isUpdate = false;
