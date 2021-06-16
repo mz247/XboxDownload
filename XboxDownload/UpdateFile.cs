@@ -15,13 +15,24 @@ namespace XboxDownload
 
         public static void Start(bool autoupdate)
         {
-            SocketPackage socketPackage = ClassWeb.HttpRequest(updateUrl + "/XboxDownload.exe.md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+            string exeFile = updateUrl + "/XboxDownload.exe";
+            string pdfFile = updateUrl + "/ProductManual.pdf";
+            string txtFile = updateUrl + "/IP.assets1.xboxlive.cn.txt";
+            SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+            if (!string.IsNullOrEmpty(socketPackage.Err))
+            {
+                //防止被墙
+                exeFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/XboxDownload.exe");
+                pdfFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/ProductManual.pdf");
+                txtFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/IP.assets1.xboxlive.cn.txt");
+                socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+            }
             string md5 = socketPackage.Html;
             if (!Regex.IsMatch(md5, @"^[A-Z0-9]{32}$"))
             {
                 if (!autoupdate)
                 {
-                    Application.OpenForms[0].Invoke(new MethodInvoker(() => 
+                    Application.OpenForms[0].Invoke(new MethodInvoker(() =>
                     {
                         MessageBox.Show("检查更新出错，请稍候再试。", "软件更新", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }));
@@ -31,7 +42,7 @@ namespace XboxDownload
             if (!string.Equals(md5, GetPathMD5(Application.ExecutablePath)))
             {
                 bool isUpdate = false;
-                Application.OpenForms[0].Invoke(new MethodInvoker(() => 
+                Application.OpenForms[0].Invoke(new MethodInvoker(() =>
                 {
                     isUpdate = MessageBox.Show("已检测到新版本, 是否立即更新?", "软件更新", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2) == DialogResult.Yes;
                 }));
@@ -41,7 +52,7 @@ namespace XboxDownload
                 Task[] tasks = new Task[3];
                 tasks[0] = new Task(() =>
                 {
-                    SocketPackage sp = ClassWeb.HttpRequest(updateUrl + "/XboxDownload.exe", "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
+                    SocketPackage sp = ClassWeb.HttpRequest(exeFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
                     if (string.IsNullOrEmpty(sp.Err))
                     {
                         using (FileStream fs = new FileStream(filename + ".update", FileMode.Create, FileAccess.Write))
@@ -54,7 +65,7 @@ namespace XboxDownload
                 });
                 tasks[1] = new Task(() =>
                 {
-                    SocketPackage sp = ClassWeb.HttpRequest(updateUrl + "/ProductManual.pdf", "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
+                    SocketPackage sp = ClassWeb.HttpRequest(pdfFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
                     if (string.IsNullOrEmpty(sp.Err))
                     {
                         using (FileStream fs = new FileStream(Application.StartupPath + "\\ProductManual.pdf", FileMode.Create, FileAccess.Write))
@@ -67,7 +78,7 @@ namespace XboxDownload
                 });
                 tasks[2] = new Task(() =>
                 {
-                    SocketPackage sp = ClassWeb.HttpRequest(updateUrl + "/IP.assets1.xboxlive.cn.txt", "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
+                    SocketPackage sp = ClassWeb.HttpRequest(txtFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
                     if (string.IsNullOrEmpty(sp.Err))
                     {
                         using (FileStream fs = new FileStream(Application.StartupPath + "\\IP.assets1.xboxlive.cn.txt", FileMode.Create, FileAccess.Write))
@@ -124,7 +135,7 @@ namespace XboxDownload
             }
             else if (!autoupdate)
             {
-                Application.OpenForms[0].Invoke(new MethodInvoker(() => 
+                Application.OpenForms[0].Invoke(new MethodInvoker(() =>
                 {
                     MessageBox.Show("软件已经是最新版本。", "软件更新", MessageBoxButtons.OK, MessageBoxIcon.None);
                 }));
