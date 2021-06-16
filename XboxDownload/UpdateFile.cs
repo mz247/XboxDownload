@@ -79,12 +79,12 @@ namespace XboxDownload
                 Task[] tasks = new Task[3];
                 tasks[0] = new Task(() =>
                 {
-                    SocketPackage sp = ClassWeb.HttpRequest(exeFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
-                    if (string.IsNullOrEmpty(sp.Err))
+                    SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
+                    if (string.IsNullOrEmpty(socketPackage.Err))
                     {
                         using (FileStream fs = new FileStream(filename + ".update", FileMode.Create, FileAccess.Write))
                         {
-                            fs.Write(sp.Buffer, 0, sp.Buffer.Length);
+                            fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
                             fs.Flush();
                             fs.Close();
                         }
@@ -92,12 +92,12 @@ namespace XboxDownload
                 });
                 tasks[1] = new Task(() =>
                 {
-                    SocketPackage sp = ClassWeb.HttpRequest(pdfFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
-                    if (string.IsNullOrEmpty(sp.Err))
+                    SocketPackage socketPackage = ClassWeb.HttpRequest(pdfFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
+                    if (string.IsNullOrEmpty(socketPackage.Err))
                     {
                         using (FileStream fs = new FileStream(Application.StartupPath + "\\ProductManual.pdf", FileMode.Create, FileAccess.Write))
                         {
-                            fs.Write(sp.Buffer, 0, sp.Buffer.Length);
+                            fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
                             fs.Flush();
                             fs.Close();
                         }
@@ -105,12 +105,12 @@ namespace XboxDownload
                 });
                 tasks[2] = new Task(() =>
                 {
-                    SocketPackage sp = ClassWeb.HttpRequest(txtFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
-                    if (string.IsNullOrEmpty(sp.Err))
+                    SocketPackage socketPackage = ClassWeb.HttpRequest(txtFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
+                    if (string.IsNullOrEmpty(socketPackage.Err))
                     {
                         using (FileStream fs = new FileStream(Application.StartupPath + "\\IP.assets1.xboxlive.cn.txt", FileMode.Create, FileAccess.Write))
                         {
-                            fs.Write(sp.Buffer, 0, sp.Buffer.Length);
+                            fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
                             fs.Flush();
                             fs.Close();
                         }
