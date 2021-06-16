@@ -20,36 +20,36 @@ namespace XboxDownload
             tasks[0] = new Task(() =>
             {
                 string exeFile = updateUrl + "/XboxDownload.exe";
-                string pdfFile = updateUrl + "/ProductManual.pdf";
-                string txtFile = updateUrl + "/IP.assets1.xboxlive.cn.txt";
                 SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
                 if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
                 {
                     md5 = socketPackage.Html;
+                    string pdfFile = updateUrl + "/ProductManual.pdf";
+                    string txtFile = updateUrl + "/IP.assets1.xboxlive.cn.txt";
                     Update(autoupdate, md5, exeFile, pdfFile, txtFile);
                 }
             });
             tasks[1] = new Task(() =>
             {
                 string exeFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/XboxDownload.exe");
-                string pdfFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/ProductManual.pdf");
-                string txtFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/IP.assets1.xboxlive.cn.txt");
                 SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
                 if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
                 {
                     md5 = socketPackage.Html;
+                    string pdfFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/ProductManual.pdf");
+                    string txtFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/IP.assets1.xboxlive.cn.txt");
                     Update(autoupdate, md5, exeFile, pdfFile, txtFile);
                 }
             });
             tasks[2] = new Task(() =>
             {
                 string exeFile = "https://mirror.ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/XboxDownload.exe");
-                string pdfFile = "https://mirror.ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/ProductManual.pdf");
-                string txtFile = "https://mirror.ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/IP.assets1.xboxlive.cn.txt");
                 SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
                 if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
                 {
                     md5 = socketPackage.Html;
+                    string pdfFile = "https://mirror.ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/ProductManual.pdf");
+                    string txtFile = "https://mirror.ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/IP.assets1.xboxlive.cn.txt");
                     Update(autoupdate, md5, exeFile, pdfFile, txtFile);
                 }
             });
