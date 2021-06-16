@@ -64,6 +64,7 @@ namespace XboxDownload
         public class Properties
         {
             public List<Packages> Packages { get; set; }
+            public List<BundledSkus> BundledSkus { get; set; }
         }
 
         public class Packages
@@ -71,6 +72,11 @@ namespace XboxDownload
             public ulong MaxDownloadSizeInBytes { get; set; }
             public List<PlatformDependencies> PlatformDependencies { get; set; }
             public List<PackageDownloadUris> PackageDownloadUris { get; set; }
+        }
+
+        public class BundledSkus
+        {
+            public string BigId { get; set; }
         }
 
         public class PlatformDependencies

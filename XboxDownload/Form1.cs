@@ -1382,6 +1382,7 @@ namespace XboxDownload
             {
                 pbSniffer.Image = pbSniffer.InitialImage;
                 tbSnifferTitle.Clear();
+                cbSnifferBundled.Items.Clear();
                 tbSnifferPrice.Clear();
                 tbSnifferDescription.Clear();
                 lvSniffer.Items.Clear();
@@ -1396,8 +1397,22 @@ namespace XboxDownload
             }
         }
 
+        private void CbSnifferBundled_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbSnifferBundled.SelectedIndex == 0) return;
+            pbSniffer.Image = pbSniffer.InitialImage;
+            tbSnifferTitle.Clear();
+            tbSnifferPrice.Clear();
+            tbSnifferDescription.Clear();
+            lvSniffer.Items.Clear();
+            Market market = cbSnifferBundled.Tag as Market;
+            string productId = cbSnifferBundled.Text;
+            ThreadPool.QueueUserWorkItem(delegate { Sniffer(market, productId); });
+        }
+
         private void Sniffer(Market market, string productId)
         {
+            cbSnifferBundled.Tag = market;
             string url = "https://displaycatalog.mp.microsoft.com/v7.0/products/" + productId + "/?fieldsTemplate=InstallAgent&market=" + market.code + "&languages=" + market.lang + ",neutral";
             SocketPackage socketPackage = ClassWeb.HttpRequest(url, "GET", null, null, true, false, true, null, "application/json", new string[] { "MS-CV: q5E5dXQLOUmztXqT.44.1.3" }, "Install Service", null, null, null, 0, null);
             if (Regex.IsMatch(socketPackage.Html, @"^{.+}$", RegexOptions.Singleline))
@@ -1407,6 +1422,7 @@ namespace XboxDownload
                 if (json != null && json.Product != null && json.Product.LocalizedProperties != null)
                 {
                     string title = string.Empty, description = string.Empty;
+                    List<string> bundled = new List<string>();
                     List<ListViewItem> ls = new List<ListViewItem>();
                     var localizedPropertie = json.Product.LocalizedProperties;
                     if (localizedPropertie.Count >= 1)
@@ -1455,6 +1471,13 @@ namespace XboxDownload
                                     if (listViewItem != null) ls.Add(listViewItem);
                                 }
                             }
+                            if (displaySkuAvailabilitie.Sku.Properties.BundledSkus != null)
+                            {
+                                foreach (var BundledSkus in displaySkuAvailabilitie.Sku.Properties.BundledSkus)
+                                {
+                                    bundled.Add(BundledSkus.BigId);
+                                }
+                            }
                             break;
                         }
                     }
@@ -1466,6 +1489,12 @@ namespace XboxDownload
                     this.Invoke(new Action(() =>
                     {
                         tbSnifferTitle.Text = title;
+                        if (bundled.Count >= 1)
+                        {
+                            cbSnifferBundled.Items.Add("组合包(" + bundled.Count + ")");
+                            cbSnifferBundled.Items.AddRange(bundled.ToArray());
+                            cbSnifferBundled.SelectedIndex = 0;
+                        }
                         if (MSRP > 0)
                         {
                             StringBuilder sb = new StringBuilder();
