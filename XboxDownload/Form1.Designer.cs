@@ -31,10 +31,10 @@ namespace XboxDownload
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiMinimizeTray = new System.Windows.Forms.ToolStripMenuItem();
@@ -834,9 +834,9 @@ namespace XboxDownload
             // 
             // Col_TTL
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N0";
-            this.Col_TTL.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle17.Format = "N0";
+            this.Col_TTL.DefaultCellStyle = dataGridViewCellStyle17;
             this.Col_TTL.HeaderText = "TTL";
             this.Col_TTL.MinimumWidth = 8;
             this.Col_TTL.Name = "Col_TTL";
@@ -844,10 +844,10 @@ namespace XboxDownload
             // 
             // Col_RoundtripTime
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.Col_RoundtripTime.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle18.Format = "N0";
+            dataGridViewCellStyle18.NullValue = null;
+            this.Col_RoundtripTime.DefaultCellStyle = dataGridViewCellStyle18;
             this.Col_RoundtripTime.HeaderText = "响应时间(ms)";
             this.Col_RoundtripTime.MinimumWidth = 8;
             this.Col_RoundtripTime.Name = "Col_RoundtripTime";
@@ -855,10 +855,10 @@ namespace XboxDownload
             // 
             // Col_Speed
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Col_Speed.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle19.Format = "N2";
+            dataGridViewCellStyle19.NullValue = null;
+            this.Col_Speed.DefaultCellStyle = dataGridViewCellStyle19;
             this.Col_Speed.HeaderText = "下载速度(Mbps)";
             this.Col_Speed.MinimumWidth = 8;
             this.Col_Speed.Name = "Col_Speed";
@@ -1478,8 +1478,8 @@ namespace XboxDownload
             // 
             // Col_Size
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.Col_Size.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Col_Size.DefaultCellStyle = dataGridViewCellStyle20;
             this.Col_Size.HeaderText = "容量";
             this.Col_Size.MinimumWidth = 8;
             this.Col_Size.Name = "Col_Size";
@@ -1628,7 +1628,7 @@ namespace XboxDownload
             this.cbSnifferBundled.Location = new System.Drawing.Point(1279, 16);
             this.cbSnifferBundled.Name = "cbSnifferBundled";
             this.cbSnifferBundled.Size = new System.Drawing.Size(155, 26);
-            this.cbSnifferBundled.TabIndex = 16;
+            this.cbSnifferBundled.TabIndex = 2;
             this.cbSnifferBundled.SelectedIndexChanged += new System.EventHandler(this.CbSnifferBundled_SelectedIndexChanged);
             // 
             // tbSnifferPrice
@@ -1638,7 +1638,7 @@ namespace XboxDownload
             this.tbSnifferPrice.Name = "tbSnifferPrice";
             this.tbSnifferPrice.ReadOnly = true;
             this.tbSnifferPrice.Size = new System.Drawing.Size(1085, 28);
-            this.tbSnifferPrice.TabIndex = 3;
+            this.tbSnifferPrice.TabIndex = 4;
             // 
             // label22
             // 
@@ -1677,7 +1677,7 @@ namespace XboxDownload
             this.tbSnifferDescription.ReadOnly = true;
             this.tbSnifferDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbSnifferDescription.Size = new System.Drawing.Size(1085, 195);
-            this.tbSnifferDescription.TabIndex = 2;
+            this.tbSnifferDescription.TabIndex = 3;
             // 
             // tbSnifferTitle
             // 

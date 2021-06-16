@@ -763,6 +763,7 @@ namespace XboxDownload
                         fs.Write(bytes, 0, bytes.Length);
                         fs.Close();
                     }
+                    fi.Refresh();
                 }
             }
             string content = string.Empty;
@@ -1399,12 +1400,13 @@ namespace XboxDownload
 
         private void CbSnifferBundled_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbSnifferBundled.SelectedIndex == 0) return;
+            if (cbSnifferBundled.SelectedIndex <= 0) return;
             pbSniffer.Image = pbSniffer.InitialImage;
             tbSnifferTitle.Clear();
             tbSnifferPrice.Clear();
             tbSnifferDescription.Clear();
             lvSniffer.Items.Clear();
+            butSniffer.Enabled = false;
             Market market = cbSnifferBundled.Tag as Market;
             string productId = cbSnifferBundled.Text;
             ThreadPool.QueueUserWorkItem(delegate { Sniffer(market, productId); });
@@ -1442,7 +1444,11 @@ namespace XboxDownload
                         if (!string.IsNullOrEmpty(imageUri))
                         {
                             if (imageUri.StartsWith("//")) imageUri = "http:" + imageUri;
-                            pbSniffer.Load(imageUri);
+                            try
+                            {
+                                pbSniffer.Load(imageUri);
+                            }
+                            catch { }
                         }
                     }
                     foreach (var displaySkuAvailabilitie in json.Product.DisplaySkuAvailabilities)
@@ -1500,7 +1506,7 @@ namespace XboxDownload
                             StringBuilder sb = new StringBuilder();
                             sb.Append(string.Format("币种: {0}, 建议零售价: {1}", CurrencyCode, String.Format("{0:N}", MSRP)));
                             if (ListPrice != MSRP) sb.Append(string.Format(", 折扣{0}%: {1}", Math.Round(ListPrice / MSRP * 100, 0, MidpointRounding.AwayFromZero), String.Format("{0:N}", ListPrice)));
-                            if (ListPrice_1 > 0) sb.Append(string.Format(", 金会员折扣{0}%: {1}", Math.Round(ListPrice_1 / MSRP * 100, 0, MidpointRounding.AwayFromZero), String.Format("{0:N}", ListPrice_1)));
+                            if (ListPrice_1 > 0 && ListPrice_1 != MSRP) sb.Append(string.Format(", 金会员折扣{0}%: {1}", Math.Round(ListPrice_1 / MSRP * 100, 0, MidpointRounding.AwayFromZero), String.Format("{0:N}", ListPrice_1)));
                             if (WholesalePrice > 0) sb.Append(string.Format(", 批发价: {0}", String.Format("{0:N}", WholesalePrice)));
                             tbSnifferPrice.Text = sb.ToString();
                         }

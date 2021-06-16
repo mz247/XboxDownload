@@ -11,7 +11,10 @@ namespace XboxDownload
 {
     class UpdateFile
     {
-        public static string updateUrl = "https://github.com/skydevil88/XboxDownload/releases/download/v1";
+        public static string updateUrl = "https://github.com/skydevil88/XboxDownload/releases/download/v1/";
+        public static string exeFile = updateUrl + "XboxDownload.exe";
+        public static string pdfFile = updateUrl + "ProductManual.pdf";
+        public static string txtFile = updateUrl + "IP.assets1.xboxlive.cn.txt";
 
         public static void Start(bool autoupdate)
         {
@@ -19,38 +22,31 @@ namespace XboxDownload
             Task[] tasks = new Task[3];
             tasks[0] = new Task(() =>
             {
-                string exeFile = updateUrl + "/XboxDownload.exe";
                 SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
                 if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
                 {
                     md5 = socketPackage.Html;
-                    string pdfFile = updateUrl + "/ProductManual.pdf";
-                    string txtFile = updateUrl + "/IP.assets1.xboxlive.cn.txt";
                     Update(autoupdate, md5, exeFile, pdfFile, txtFile);
                 }
             });
             tasks[1] = new Task(() =>
             {
-                string exeFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/XboxDownload.exe");
-                SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+                string proxy = "https://ghproxy.com/";
+                SocketPackage socketPackage = ClassWeb.HttpRequest(proxy + ClassWeb.UrlEncode(exeFile + ".md5"), "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
                 if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
                 {
                     md5 = socketPackage.Html;
-                    string pdfFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/ProductManual.pdf");
-                    string txtFile = "https://ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/IP.assets1.xboxlive.cn.txt");
-                    Update(autoupdate, md5, exeFile, pdfFile, txtFile);
+                    Update(autoupdate, md5, proxy + ClassWeb.UrlEncode(exeFile), proxy + ClassWeb.UrlEncode(pdfFile), proxy + ClassWeb.UrlEncode(txtFile));
                 }
             });
             tasks[2] = new Task(() =>
             {
-                string exeFile = "https://mirror.ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/XboxDownload.exe");
-                SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+                string proxy = "https://mirror.ghproxy.com/";
+                SocketPackage socketPackage = ClassWeb.HttpRequest(proxy + ClassWeb.UrlEncode(exeFile + ".md5"), "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
                 if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
                 {
                     md5 = socketPackage.Html;
-                    string pdfFile = "https://mirror.ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/ProductManual.pdf");
-                    string txtFile = "https://mirror.ghproxy.com/" + ClassWeb.UrlEncode(updateUrl + "/IP.assets1.xboxlive.cn.txt");
-                    Update(autoupdate, md5, exeFile, pdfFile, txtFile);
+                    Update(autoupdate, md5, proxy + ClassWeb.UrlEncode(exeFile), proxy + ClassWeb.UrlEncode(pdfFile), proxy + ClassWeb.UrlEncode(txtFile));
                 }
             });
             Array.ForEach(tasks, x => x.Start());
@@ -80,7 +76,7 @@ namespace XboxDownload
                 tasks[0] = new Task(() =>
                 {
                     SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
-                    if (string.IsNullOrEmpty(socketPackage.Err))
+                    if (string.IsNullOrEmpty(socketPackage.Err) && socketPackage.Buffer.Length > 0)
                     {
                         using (FileStream fs = new FileStream(filename + ".update", FileMode.Create, FileAccess.Write))
                         {
@@ -93,9 +89,9 @@ namespace XboxDownload
                 tasks[1] = new Task(() =>
                 {
                     SocketPackage socketPackage = ClassWeb.HttpRequest(pdfFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
-                    if (string.IsNullOrEmpty(socketPackage.Err))
+                    if (string.IsNullOrEmpty(socketPackage.Err) && socketPackage.Buffer.Length > 0)
                     {
-                        using (FileStream fs = new FileStream(Application.StartupPath + "\\ProductManual.pdf", FileMode.Create, FileAccess.Write))
+                        using (FileStream fs = new FileStream(Application.StartupPath + "\\" + Path.GetFileName(pdfFile), FileMode.Create, FileAccess.Write))
                         {
                             fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
                             fs.Flush();
@@ -106,9 +102,9 @@ namespace XboxDownload
                 tasks[2] = new Task(() =>
                 {
                     SocketPackage socketPackage = ClassWeb.HttpRequest(txtFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
-                    if (string.IsNullOrEmpty(socketPackage.Err))
+                    if (string.IsNullOrEmpty(socketPackage.Err) && socketPackage.Buffer.Length > 0)
                     {
-                        using (FileStream fs = new FileStream(Application.StartupPath + "\\IP.assets1.xboxlive.cn.txt", FileMode.Create, FileAccess.Write))
+                        using (FileStream fs = new FileStream(Application.StartupPath + "\\" + Path.GetFileName(txtFile), FileMode.Create, FileAccess.Write))
                         {
                             fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
                             fs.Flush();
