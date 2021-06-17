@@ -32,6 +32,25 @@ namespace XboxDownload
         {
             InitializeComponent();
 
+            Graphics graphics = this.CreateGraphics();
+            float dpiX = graphics.DpiX / 96;
+            if (dpiX > 1)
+            {
+                foreach (ColumnHeader col in lvLog.Columns)
+                    col.Width = (int)(col.Width * dpiX);
+                dgvIpList.RowHeadersWidth = (int)(dgvIpList.RowHeadersWidth * dpiX);
+                foreach (DataGridViewColumn col in dgvIpList.Columns)
+                    col.Width = (int)(col.Width * dpiX);
+                dgvHosts.RowHeadersWidth = (int)(dgvHosts.RowHeadersWidth * dpiX);
+                foreach (DataGridViewColumn col in dgvHosts.Columns)
+                    col.Width = (int)(col.Width * dpiX);
+                dgvDevice.RowHeadersWidth = (int)(dgvDevice.RowHeadersWidth * dpiX);
+                foreach (DataGridViewColumn col in dgvDevice.Columns)
+                    col.Width = (int)(col.Width * dpiX);
+                foreach (ColumnHeader col in lvSniffer.Columns)
+                    col.Width = (int)(col.Width * dpiX);
+            }
+
             dnsProxy = new DNSProxy(this);
             httpProxy = new HTTPProxy(this);
 

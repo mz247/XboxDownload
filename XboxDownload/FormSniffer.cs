@@ -12,6 +12,15 @@ namespace XboxDownload
         public FormSniffer()
         {
             InitializeComponent();
+
+            Graphics graphics = this.CreateGraphics();
+            float dpiX = graphics.DpiX / 96;
+            if (dpiX > 1)
+            {
+                dgvGames.RowHeadersWidth = (int)(dgvGames.RowHeadersWidth * dpiX);
+                foreach (DataGridViewColumn col in dgvGames.Columns)
+                    col.Width = (int)(col.Width * dpiX);
+            }
         }
 
         private void FormSniffer_Load(object sender, EventArgs e)
@@ -51,7 +60,6 @@ namespace XboxDownload
             {
                 DataGridViewRow dgvr = new DataGridViewRow();
                 dgvr.CreateCells(dgvGames);
-                dgvr.Height = 22;
                 dgvr.Resizable = DataGridViewTriState.False;
                 dgvr.Cells[0].Value = game.Name;
                 dgvr.Cells[1].Value = game.Note;
