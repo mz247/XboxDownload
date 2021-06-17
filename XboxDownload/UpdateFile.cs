@@ -91,7 +91,7 @@ namespace XboxDownload
                     SocketPackage socketPackage = ClassWeb.HttpRequest(pdfFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
                     if (string.IsNullOrEmpty(socketPackage.Err) && socketPackage.Buffer.Length > 0)
                     {
-                        using (FileStream fs = new FileStream(Application.StartupPath + "\\" + Path.GetFileName(pdfFile), FileMode.Create, FileAccess.Write))
+                        using (FileStream fs = new FileStream(Application.StartupPath + "\\" + Path.GetFileName(UpdateFile.pdfFile), FileMode.Create, FileAccess.Write))
                         {
                             fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
                             fs.Flush();
@@ -104,7 +104,7 @@ namespace XboxDownload
                     SocketPackage socketPackage = ClassWeb.HttpRequest(txtFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
                     if (string.IsNullOrEmpty(socketPackage.Err) && socketPackage.Buffer.Length > 0)
                     {
-                        using (FileStream fs = new FileStream(Application.StartupPath + "\\" + Path.GetFileName(txtFile), FileMode.Create, FileAccess.Write))
+                        using (FileStream fs = new FileStream(Application.StartupPath + "\\" + Path.GetFileName(UpdateFile.txtFile), FileMode.Create, FileAccess.Write))
                         {
                             fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
                             fs.Flush();
