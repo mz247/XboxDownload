@@ -157,27 +157,31 @@ namespace XboxDownload
             });
         }
 
+        internal static Boolean dlFileDone = false;
         private void TsmGuide_Click(object sender, EventArgs e)
         {
-            string file = Application.StartupPath + "\\ProductManual.pdf";
-            if (File.Exists(file))
+            FileInfo fi = new FileInfo(Application.StartupPath + "\\" + UpdateFile.pdfFile);
+            if (!fi.Exists)
             {
-                Process.Start(file);
-            }
-            else
-            {
-                SocketPackage socketPackage = ClassWeb.HttpRequest(UpdateFile.updateUrl + "/ProductManual.pdf", "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
-                if (string.IsNullOrEmpty(socketPackage.Err))
+                dlFileDone = false;
+                Thread thread = new Thread(new ThreadStart(() =>
                 {
-                    using (FileStream fs = File.Create(file))
-                    {
-                        fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
-                        fs.Close();
-                    }
-                    Process.Start(file);
+                    UpdateFile.Download(UpdateFile.pdfFile);
+                }))
+                {
+                    IsBackground = true
+                };
+                thread.Start();
+                while (!dlFileDone)
+                {
+                    Application.DoEvents();
                 }
-                else MessageBox.Show("文件不存在", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                fi.Refresh();
             }
+            if (fi.Exists)
+                Process.Start(fi.FullName);
+            else
+                MessageBox.Show("文件不存在", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void TsmAbout_Click(object sender, EventArgs e)
@@ -750,21 +754,24 @@ namespace XboxDownload
             dgvIpList.Rows.Clear();
 
             bool update = true;
-            FileInfo fi = new FileInfo(Application.StartupPath + "\\IP.assets1.xboxlive.cn.txt");
+            FileInfo fi = new FileInfo(Application.StartupPath + "\\"+ UpdateFile.txtFile);
             if (fi.Exists) update = DateTime.Compare(DateTime.Now, fi.LastWriteTime.AddHours(24)) >= 0;
             if (update)
             {
-                SocketPackage socketPackage = ClassWeb.HttpRequest(UpdateFile.updateUrl + "/IP.assets1.xboxlive.cn.txt", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
-                if (string.IsNullOrEmpty(socketPackage.Err))
+                dlFileDone = false;
+                Thread thread = new Thread(new ThreadStart(() =>
                 {
-                    using (FileStream fs = fi.Create())
-                    {
-                        Byte[] bytes = new UTF8Encoding(true).GetBytes(socketPackage.Html);
-                        fs.Write(bytes, 0, bytes.Length);
-                        fs.Close();
-                    }
-                    fi.Refresh();
+                    UpdateFile.Download(UpdateFile.txtFile);
+                }))
+                {
+                    IsBackground = true
+                };
+                thread.Start();
+                while (!dlFileDone)
+                {
+                    Application.DoEvents();
                 }
+                fi.Refresh();
             }
             string content = string.Empty;
             if (fi.Exists) content = fi.OpenText().ReadToEnd();

@@ -78,12 +78,16 @@ namespace XboxDownload
                     SocketPackage socketPackage = ClassWeb.HttpRequest(exeFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
                     if (string.IsNullOrEmpty(socketPackage.Err) && socketPackage.Buffer.Length > 0)
                     {
-                        using (FileStream fs = new FileStream(filename + ".update", FileMode.Create, FileAccess.Write))
+                        try
                         {
-                            fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
-                            fs.Flush();
-                            fs.Close();
+                            using (FileStream fs = new FileStream(filename + ".update", FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                            {
+                                fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
+                                fs.Flush();
+                                fs.Close();
+                            }
                         }
+                        catch { }
                     }
                 });
                 tasks[1] = new Task(() =>
@@ -91,12 +95,16 @@ namespace XboxDownload
                     SocketPackage socketPackage = ClassWeb.HttpRequest(pdfFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
                     if (string.IsNullOrEmpty(socketPackage.Err) && socketPackage.Buffer.Length > 0)
                     {
-                        using (FileStream fs = new FileStream(Application.StartupPath + "\\" + UpdateFile.pdfFile, FileMode.Create, FileAccess.Write))
+                        try
                         {
-                            fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
-                            fs.Flush();
-                            fs.Close();
+                            using (FileStream fs = new FileStream(Application.StartupPath + "\\" + UpdateFile.pdfFile, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                            {
+                                fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
+                                fs.Flush();
+                                fs.Close();
+                            }
                         }
+                        catch { }
                     }
                 });
                 tasks[2] = new Task(() =>
@@ -104,12 +112,16 @@ namespace XboxDownload
                     SocketPackage socketPackage = ClassWeb.HttpRequest(txtFile, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
                     if (string.IsNullOrEmpty(socketPackage.Err) && socketPackage.Buffer.Length > 0)
                     {
-                        using (FileStream fs = new FileStream(Application.StartupPath + "\\" + UpdateFile.txtFile, FileMode.Create, FileAccess.Write))
+                        try
                         {
-                            fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
-                            fs.Flush();
-                            fs.Close();
+                            using (FileStream fs = new FileStream(Application.StartupPath + "\\" + UpdateFile.txtFile, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                            {
+                                fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
+                                fs.Flush();
+                                fs.Close();
+                            }
                         }
+                        catch { }
                     }
                 });
                 Array.ForEach(tasks, x => x.Start());
@@ -163,6 +175,62 @@ namespace XboxDownload
                     MessageBox.Show("软件已经是最新版本。", "软件更新", MessageBoxButtons.OK, MessageBoxIcon.None);
                 }));
             }
+        }
+
+        public static void Download(string filename)
+        {
+            string md5 = string.Empty;
+            Task[] tasks = new Task[3];
+            tasks[0] = new Task(() =>
+            {
+                SocketPackage socketPackage = ClassWeb.HttpRequest(updateUrl + exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+                if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
+                {
+                    md5 = socketPackage.Html;
+                    Download(filename, updateUrl + filename);
+                }
+            });
+            tasks[1] = new Task(() =>
+            {
+                string proxy = "https://ghproxy.com/";
+                SocketPackage socketPackage = ClassWeb.HttpRequest(proxy + ClassWeb.UrlEncode(updateUrl + exeFile + ".md5"), "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+                if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
+                {
+                    md5 = socketPackage.Html;
+                    Download(filename, proxy + ClassWeb.UrlEncode(updateUrl + filename));
+                }
+            });
+            tasks[2] = new Task(() =>
+            {
+                string proxy = "https://mirror.ghproxy.com/";
+                SocketPackage socketPackage = ClassWeb.HttpRequest(proxy + ClassWeb.UrlEncode(updateUrl + exeFile + ".md5"), "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+                if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
+                {
+                    md5 = socketPackage.Html;
+                    Download(filename, proxy + ClassWeb.UrlEncode(updateUrl + filename));
+                }
+            });
+            Array.ForEach(tasks, x => x.Start());
+            Task.WaitAll(tasks);
+        }
+
+        private static void Download(string filename, string url)
+        {
+            SocketPackage socketPackage = ClassWeb.HttpRequest(url, "GET", null, null, true, false, false, null, null, null, null, null, null, null, 0, null);
+            if (string.IsNullOrEmpty(socketPackage.Err) && socketPackage.Buffer.Length > 0)
+            {
+                try
+                {
+                    using (FileStream fs = new FileStream(Application.StartupPath + "\\" + filename, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                    {
+                        fs.Write(socketPackage.Buffer, 0, socketPackage.Buffer.Length);
+                        fs.Flush();
+                        fs.Close();
+                    }
+                }
+                catch { }
+            }
+            Form1.dlFileDone = true;
         }
 
         public static string GetPathMD5(string path)
