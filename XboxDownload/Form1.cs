@@ -164,14 +164,7 @@ namespace XboxDownload
             if (!fi.Exists)
             {
                 dlFileDone = false;
-                Thread thread = new Thread(new ThreadStart(() =>
-                {
-                    UpdateFile.Download(UpdateFile.pdfFile);
-                }))
-                {
-                    IsBackground = true
-                };
-                thread.Start();
+                ThreadPool.QueueUserWorkItem(delegate { UpdateFile.Download(UpdateFile.pdfFile); });
                 while (!dlFileDone)
                 {
                     Application.DoEvents();
@@ -759,14 +752,7 @@ namespace XboxDownload
             if (update)
             {
                 dlFileDone = false;
-                Thread thread = new Thread(new ThreadStart(() =>
-                {
-                    UpdateFile.Download(UpdateFile.txtFile);
-                }))
-                {
-                    IsBackground = true
-                };
-                thread.Start();
+                ThreadPool.QueueUserWorkItem(delegate { UpdateFile.Download(UpdateFile.txtFile); });
                 while (!dlFileDone)
                 {
                     Application.DoEvents();
