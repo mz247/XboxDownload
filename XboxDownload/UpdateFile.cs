@@ -127,13 +127,11 @@ namespace XboxDownload
                 Array.ForEach(tasks, x => x.Start());
                 Task.WaitAll(tasks);
 
-                bool success = false;
                 FileInfo fi = new FileInfo(filename + ".update");
                 if (fi.Exists)
                 {
                     if (string.Equals(md5, GetPathMD5(fi.FullName)))
                     {
-                        success = true;
                         if (File.Exists(filename + ".md5"))
                         {
                             File.Delete(filename + ".md5");
@@ -160,13 +158,10 @@ namespace XboxDownload
                         fi.Delete();
                     }
                 }
-                if (!success)
+                Application.OpenForms[0].Invoke(new MethodInvoker(() =>
                 {
-                    Application.OpenForms[0].Invoke(new MethodInvoker(() =>
-                    {
-                        MessageBox.Show("下载文件出错，请稍候再试。", "软件更新", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }));
-                }
+                    MessageBox.Show("下载文件出错，请稍候再试。", "软件更新", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
             }
             else if (!autoupdate)
             {

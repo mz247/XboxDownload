@@ -32,11 +32,7 @@ namespace XboxDownload
         {
             InitializeComponent();
 
-            float dpixRatio = 1;
-            if (Environment.OSVersion.Version.Major >= 10)
-                dpixRatio = CreateGraphics().DpiX / 96;
-            else
-                dpixRatio = Program.Utility.DpiX / 96;
+            float dpixRatio = Environment.OSVersion.Version.Major >= 10 ? CreateGraphics().DpiX / 96 : Program.Utility.DpiX / 96;
             if (dpixRatio > 1)
             {
                 foreach (ColumnHeader col in lvLog.Columns)
@@ -1531,7 +1527,11 @@ namespace XboxDownload
                             tbSnifferPrice.Text = sb.ToString();
                         }
                         tbSnifferDescription.Text = description;
-                        if (ls.Count >= 1) lvSniffer.Items.AddRange(ls.ToArray());
+                        if (ls.Count >= 1)
+                        {
+                            lvSniffer.Items.Clear();
+                            lvSniffer.Items.AddRange(ls.ToArray());
+                        }
                         butSniffer.Enabled = true;
                     }));
                 }

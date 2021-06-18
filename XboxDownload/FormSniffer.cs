@@ -13,11 +13,7 @@ namespace XboxDownload
         {
             InitializeComponent();
 
-            float dpixRatio = 1;
-            if (Environment.OSVersion.Version.Major >= 10)
-                dpixRatio = CreateGraphics().DpiX / 96;
-            else
-                dpixRatio = Program.Utility.DpiX / 96;
+            float dpixRatio = Environment.OSVersion.Version.Major >= 10 ? CreateGraphics().DpiX / 96 : Program.Utility.DpiX / 96;
             if (dpixRatio > 1)
             {
                 dgvGames.RowHeadersWidth = (int)(dgvGames.RowHeadersWidth * dpixRatio);
