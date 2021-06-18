@@ -78,7 +78,7 @@ namespace XboxDownload
             if (cbLocalIP.Items.Count >= 1)
             {
                 int index = 0;
-                if (cbLocalIP.Items.Count >= 1 && !string.IsNullOrEmpty(Properties.Settings.Default.LocalIP))
+                if (!string.IsNullOrEmpty(Properties.Settings.Default.LocalIP))
                 {
                     for (int i = 0; i < cbLocalIP.Items.Count; i++)
                     {
@@ -171,20 +171,17 @@ namespace XboxDownload
         {
             Properties.Settings.Default.NextUpdate = DateTime.Now.AddDays(7).Ticks;
             Properties.Settings.Default.Save();
-            ThreadPool.QueueUserWorkItem(delegate {
-                XboxDownload.UpdateFile.Start(false);
-            });
+            ThreadPool.QueueUserWorkItem(delegate { UpdateFile.Start(false); });
         }
 
-        internal static Boolean dlFileDone = false;
-        private void TsmGuide_Click(object sender, EventArgs e)
+        private void TsmProductManual_Click(object sender, EventArgs e)
         {
             FileInfo fi = new FileInfo(Application.StartupPath + "\\" + UpdateFile.pdfFile);
             if (!fi.Exists)
             {
-                dlFileDone = false;
+                UpdateFile.dlFileDone = false;
                 ThreadPool.QueueUserWorkItem(delegate { UpdateFile.Download(UpdateFile.pdfFile); });
-                while (!dlFileDone)
+                while (!UpdateFile.dlFileDone)
                 {
                     Application.DoEvents();
                 }
@@ -770,16 +767,22 @@ namespace XboxDownload
             if (fi.Exists) update = DateTime.Compare(DateTime.Now, fi.LastWriteTime.AddHours(24)) >= 0;
             if (update)
             {
-                dlFileDone = false;
+                UpdateFile.dlFileDone = false;
                 ThreadPool.QueueUserWorkItem(delegate { UpdateFile.Download(UpdateFile.txtFile); });
-                while (!dlFileDone)
+                while (!UpdateFile.dlFileDone)
                 {
                     Application.DoEvents();
                 }
                 fi.Refresh();
             }
             string content = string.Empty;
-            if (fi.Exists) content = fi.OpenText().ReadToEnd();
+            if (fi.Exists)
+            {
+                using (StreamReader sr = fi.OpenText())
+                {
+                    content = sr.ReadToEnd();
+                }
+            }
 
             List<DataGridViewRow> list = new List<DataGridViewRow>();
             bool telecom1 = ckbTelecom1.Checked;
@@ -987,14 +990,14 @@ namespace XboxDownload
                         PingReply reply = p1.Send(ip);
                         if (reply.Status == IPStatus.Success)
                         {
-                            dgvr.Cells["Col_TTL"].Value = Convert.ToInt32(reply.Options.Ttl);
-                            dgvr.Cells["Col_RoundtripTime"].Value = Convert.ToInt32(reply.RoundtripTime);
+                            dgvr.Cells["Col_TTL"].Value = reply.Options.Ttl;
+                            dgvr.Cells["Col_RoundtripTime"].Value = reply.RoundtripTime;
                         }
                     }
                     catch { }
                 }
                 sw.Restart();
-                SocketPackage socketPackage = ClassWeb.HttpRequest(dlFile, "GET", null, null, true, false, false, null, null, headers, null, null, null, null, 0, null, 15000, 60000, 1, ip, true);
+                SocketPackage socketPackage = ClassWeb.HttpRequest(dlFile, "GET", null, null, true, false, false, null, null, headers, null, null, null, null, 0, null, 15000, 15000, 1, ip, true);
                 sw.Stop();
                 dgvr.Tag = string.IsNullOrEmpty(socketPackage.Err) ? socketPackage.Headers : socketPackage.Err;
                 if (socketPackage.Headers.StartsWith("HTTP/1.1 206"))
@@ -1112,7 +1115,6 @@ namespace XboxDownload
                     string mode = mbr.Substring(1020);
                     DataGridViewRow dgvr = new DataGridViewRow();
                     dgvr.CreateCells(dgvDevice);
-                    dgvr.Height = 22;
                     dgvr.Resizable = DataGridViewTriState.False;
                     dgvr.Tag = mode;
                     dgvr.Cells[0].Value = sDeviceID;
@@ -1180,7 +1182,7 @@ namespace XboxDownload
                         p.StandardInput.WriteLine("exit");
                         p.Close();
                     }
-                    MessageBox.Show("成功切换PC模式。", "切换PC模式", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    MessageBox.Show("成功转换PC模式。", "转换PC模式", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
             }
         }
@@ -1200,7 +1202,7 @@ namespace XboxDownload
                     dgvDevice.SelectedRows[0].Cells["Col_Mode"].Value = "Xbox 模式";
                     dgvDevice.ClearSelection();
                     butEnabelXbox.Enabled = false;
-                    MessageBox.Show("成功切换Xbox模式。", "切换Xbox模式", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    MessageBox.Show("成功转换Xbox模式。", "转换Xbox模式", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
             }
         }

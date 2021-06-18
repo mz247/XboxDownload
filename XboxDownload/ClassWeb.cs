@@ -27,39 +27,7 @@ namespace XboxDownload
 
     class ClassWeb
     {
-        public static string HostToIP(string hostName, string dnsServer = null)
-        {
-            string hostIP = string.Empty;
-            if (string.IsNullOrEmpty(dnsServer))
-            {
-                IPAddress[] ipAddresses = Array.FindAll(Dns.GetHostEntry(hostName).AddressList, a => a.AddressFamily == AddressFamily.InterNetwork);
-                if (ipAddresses.Length >= 1)
-                {
-                    hostIP = ipAddresses[0].ToString();
-                }
-            }
-            else
-            {
-                string resultInfo = string.Empty;
-                using (Process p = new Process())
-                {
-                    p.StartInfo = new ProcessStartInfo("nslookup", hostName + " " + dnsServer)
-                    {
-                        CreateNoWindow = true,
-                        UseShellExecute = false,
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        RedirectStandardOutput = true
-                    };
-                    p.Start();
-                    resultInfo = p.StandardOutput.ReadToEnd();
-                    p.Close();
-                }
-                MatchCollection mc = Regex.Matches(resultInfo, @":\s*(?<ip>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})");
-                if (mc.Count == 2)
-                    hostIP = mc[1].Groups["ip"].Value;
-            }
-            return hostIP;
-        }
+        public static string useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36 Edg/91.0.864.48";
 
         public static SocketPackage HttpRequest(String url, String method, String postdata, String referer, Boolean redirect, Boolean ajax, Boolean decode, String charset, String contenttype, String[] headers, String useragent, CookieContainer cookies, IPEndPoint localEP, String proxyaddress, Int32 proxyport, String proxyauthorization, Int32 sendtimeout = 15000, Int32 receivetimeout = 30000, Int32 autoredirect = 1, String connectHost = null, Boolean speedtest = false)
         {
@@ -681,6 +649,40 @@ namespace XboxDownload
                 default:
                     return buffer;
             }
+        }
+
+        public static string HostToIP(string hostName, string dnsServer = null)
+        {
+            string hostIP = string.Empty;
+            if (string.IsNullOrEmpty(dnsServer))
+            {
+                IPAddress[] ipAddresses = Array.FindAll(Dns.GetHostEntry(hostName).AddressList, a => a.AddressFamily == AddressFamily.InterNetwork);
+                if (ipAddresses.Length >= 1)
+                {
+                    hostIP = ipAddresses[0].ToString();
+                }
+            }
+            else
+            {
+                string resultInfo = string.Empty;
+                using (Process p = new Process())
+                {
+                    p.StartInfo = new ProcessStartInfo("nslookup", hostName + " " + dnsServer)
+                    {
+                        CreateNoWindow = true,
+                        UseShellExecute = false,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        RedirectStandardOutput = true
+                    };
+                    p.Start();
+                    resultInfo = p.StandardOutput.ReadToEnd();
+                    p.Close();
+                }
+                MatchCollection mc = Regex.Matches(resultInfo, @":\s*(?<ip>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})");
+                if (mc.Count == 2)
+                    hostIP = mc[1].Groups["ip"].Value;
+            }
+            return hostIP;
         }
     }
 }

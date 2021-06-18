@@ -73,20 +73,19 @@ namespace XboxDownload
 
         private string QueryLocation(string ip)
         {
-            string useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36";
-            SocketPackage socketPackage = ClassWeb.HttpRequest("https://www.ip138.com/iplookup.asp?ip=" + ip + "&action=2", "GET", null, null, true, false, true, "GBK", null, null, useragent, null, null, null, 0, null);
+            SocketPackage socketPackage = ClassWeb.HttpRequest("https://www.ip138.com/iplookup.asp?ip=" + ip + "&action=2", "GET", null, null, true, false, true, "GBK", null, null, ClassWeb.useragent, null, null, null, 0, null);
             Match result = Regex.Match(socketPackage.Html, @"""ASN归属地"":""(?<location>[^""]+)""");
             if (result.Success)
             {
-                return result.Groups["location"].Value.Trim();
+                return result.Groups["location"].Value.Trim() + " (数据来源：ip138)";
             }
             else
             {
-                socketPackage = ClassWeb.HttpRequest("https://www.baidu.com/s?wd=" + ip, "GET", null, null, true, false, true, null, null, null, useragent, null, null, null, 0, null);
+                socketPackage = ClassWeb.HttpRequest("https://www.baidu.com/s?wd=" + ip, "GET", null, null, true, false, true, null, null, null, ClassWeb.useragent, null, null, null, 0, null);
                 result = Regex.Match(socketPackage.Html, @"<span [^>]+>IP地址:[^<]+</span>(?<location>.+)");
                 if (result.Success)
                 {
-                    return result.Groups["location"].Value.Trim();
+                    return result.Groups["location"].Value.Trim() + " (数据来源：百度)";
                 }
             }
             return "";

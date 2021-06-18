@@ -31,17 +31,17 @@ namespace XboxDownload
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiMinimizeTray = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmUpdate = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmGuide = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmProductManual = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -89,12 +89,6 @@ namespace XboxDownload
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dgvIpList = new System.Windows.Forms.DataGridView();
-            this.Col_Check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Col_IP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_ASN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_TTL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_RoundtripTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_Speed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.linkImportIP1 = new System.Windows.Forms.LinkLabel();
             this.linkTestUrl3 = new System.Windows.Forms.LinkLabel();
@@ -205,6 +199,12 @@ namespace XboxDownload
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmCopyUrl1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmCopyUrl2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Col_Check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Col_IP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_ASN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_TTL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_RoundtripTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_Speed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -282,7 +282,7 @@ namespace XboxDownload
             this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmUpdate,
-            this.tsmGuide,
+            this.tsmProductManual,
             this.tsmAbout});
             this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
             this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -297,12 +297,12 @@ namespace XboxDownload
             this.tsmUpdate.Text = "检查更新";
             this.tsmUpdate.Click += new System.EventHandler(this.TsmUpdate_Click);
             // 
-            // tsmGuide
+            // tsmProductManual
             // 
-            this.tsmGuide.Name = "tsmGuide";
-            this.tsmGuide.Size = new System.Drawing.Size(182, 34);
-            this.tsmGuide.Text = "使用说明";
-            this.tsmGuide.Click += new System.EventHandler(this.TsmGuide_Click);
+            this.tsmProductManual.Name = "tsmProductManual";
+            this.tsmProductManual.Size = new System.Drawing.Size(182, 34);
+            this.tsmProductManual.Text = "使用说明";
+            this.tsmProductManual.Click += new System.EventHandler(this.TsmProductManual_Click);
             // 
             // tsmAbout
             // 
@@ -344,7 +344,7 @@ namespace XboxDownload
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 28);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(1470, 859);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "服务";
@@ -373,7 +373,7 @@ namespace XboxDownload
             this.lvLog.GridLines = true;
             this.lvLog.HideSelection = false;
             this.lvLog.Location = new System.Drawing.Point(3, 24);
-            this.lvLog.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lvLog.Margin = new System.Windows.Forms.Padding(4);
             this.lvLog.MultiSelect = false;
             this.lvLog.Name = "lvLog";
             this.lvLog.Size = new System.Drawing.Size(1458, 512);
@@ -410,7 +410,7 @@ namespace XboxDownload
             this.panel1.Controls.Add(this.label4);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(3, 816);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1464, 40);
             this.panel1.TabIndex = 3;
@@ -470,7 +470,7 @@ namespace XboxDownload
             this.cbLocalIP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLocalIP.FormattingEnabled = true;
             this.cbLocalIP.Location = new System.Drawing.Point(82, 6);
-            this.cbLocalIP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbLocalIP.Margin = new System.Windows.Forms.Padding(4);
             this.cbLocalIP.Name = "cbLocalIP";
             this.cbLocalIP.Size = new System.Drawing.Size(160, 26);
             this.cbLocalIP.TabIndex = 1;
@@ -769,7 +769,7 @@ namespace XboxDownload
             this.tabPage2.Controls.Add(this.panel2);
             this.tabPage2.Location = new System.Drawing.Point(4, 28);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(1470, 859);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "测速";
@@ -808,62 +808,6 @@ namespace XboxDownload
             this.dgvIpList.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvIpList_CellMouseDoubleClick);
             this.dgvIpList.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvIpList_CellMouseDown);
             this.dgvIpList.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.Dgv_RowPostPaint);
-            // 
-            // Col_Check
-            // 
-            this.Col_Check.HeaderText = "选择";
-            this.Col_Check.MinimumWidth = 8;
-            this.Col_Check.Name = "Col_Check";
-            this.Col_Check.Width = 43;
-            // 
-            // Col_IP
-            // 
-            this.Col_IP.HeaderText = "IPv4 地址 (右键使用)";
-            this.Col_IP.MinimumWidth = 8;
-            this.Col_IP.Name = "Col_IP";
-            this.Col_IP.ReadOnly = true;
-            this.Col_IP.Width = 200;
-            // 
-            // Col_ASN
-            // 
-            this.Col_ASN.HeaderText = "归属地";
-            this.Col_ASN.MinimumWidth = 8;
-            this.Col_ASN.Name = "Col_ASN";
-            this.Col_ASN.ReadOnly = true;
-            this.Col_ASN.Width = 360;
-            // 
-            // Col_TTL
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N0";
-            this.Col_TTL.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Col_TTL.HeaderText = "TTL";
-            this.Col_TTL.MinimumWidth = 8;
-            this.Col_TTL.Name = "Col_TTL";
-            this.Col_TTL.Width = 60;
-            // 
-            // Col_RoundtripTime
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.Col_RoundtripTime.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Col_RoundtripTime.HeaderText = "响应时间(ms)";
-            this.Col_RoundtripTime.MinimumWidth = 8;
-            this.Col_RoundtripTime.Name = "Col_RoundtripTime";
-            this.Col_RoundtripTime.Width = 105;
-            // 
-            // Col_Speed
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Col_Speed.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Col_Speed.HeaderText = "下载速度(Mbps)";
-            this.Col_Speed.MinimumWidth = 8;
-            this.Col_Speed.Name = "Col_Speed";
-            this.Col_Speed.ReadOnly = true;
-            this.Col_Speed.Width = 120;
             // 
             // panel2
             // 
@@ -976,7 +920,7 @@ namespace XboxDownload
             // tbDlFile
             // 
             this.tbDlFile.Location = new System.Drawing.Point(6, 76);
-            this.tbDlFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDlFile.Margin = new System.Windows.Forms.Padding(4);
             this.tbDlFile.Multiline = true;
             this.tbDlFile.Name = "tbDlFile";
             this.tbDlFile.Size = new System.Drawing.Size(1282, 48);
@@ -985,7 +929,7 @@ namespace XboxDownload
             // butSpeedTest
             // 
             this.butSpeedTest.Location = new System.Drawing.Point(1296, 76);
-            this.butSpeedTest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.butSpeedTest.Margin = new System.Windows.Forms.Padding(4);
             this.butSpeedTest.Name = "butSpeedTest";
             this.butSpeedTest.Size = new System.Drawing.Size(124, 48);
             this.butSpeedTest.TabIndex = 14;
@@ -1043,7 +987,7 @@ namespace XboxDownload
             this.tabPage3.Controls.Add(this.panel3);
             this.tabPage3.Location = new System.Drawing.Point(4, 28);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(1470, 859);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "域名";
@@ -1166,7 +1110,7 @@ namespace XboxDownload
             // 
             this.butDomainSave.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.butDomainSave.Location = new System.Drawing.Point(604, 8);
-            this.butDomainSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.butDomainSave.Margin = new System.Windows.Forms.Padding(4);
             this.butDomainSave.Name = "butDomainSave";
             this.butDomainSave.Size = new System.Drawing.Size(112, 34);
             this.butDomainSave.TabIndex = 1;
@@ -1180,7 +1124,7 @@ namespace XboxDownload
             this.tabPage4.Controls.Add(this.groupBox5);
             this.tabPage4.Location = new System.Drawing.Point(4, 28);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(1470, 859);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "硬盘";
@@ -1534,7 +1478,7 @@ namespace XboxDownload
             this.butEnabelPc.Enabled = false;
             this.butEnabelPc.ForeColor = System.Drawing.Color.DodgerBlue;
             this.butEnabelPc.Location = new System.Drawing.Point(4, 4);
-            this.butEnabelPc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.butEnabelPc.Margin = new System.Windows.Forms.Padding(4);
             this.butEnabelPc.Name = "butEnabelPc";
             this.butEnabelPc.Size = new System.Drawing.Size(140, 34);
             this.butEnabelPc.TabIndex = 1;
@@ -1548,7 +1492,7 @@ namespace XboxDownload
             this.tabPage5.Controls.Add(this.groupBox7);
             this.tabPage5.Location = new System.Drawing.Point(4, 28);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(1470, 859);
             this.tabPage5.TabIndex = 8;
             this.tabPage5.Text = "下载";
@@ -2021,6 +1965,61 @@ namespace XboxDownload
             this.tsmCopyUrl2.Text = "复制(.com替换为.cn)";
             this.tsmCopyUrl2.Click += new System.EventHandler(this.TsmCopyUrl2_Click);
             // 
+            // Col_Check
+            // 
+            this.Col_Check.HeaderText = "选择";
+            this.Col_Check.MinimumWidth = 8;
+            this.Col_Check.Name = "Col_Check";
+            this.Col_Check.Width = 43;
+            // 
+            // Col_IP
+            // 
+            this.Col_IP.HeaderText = "IPv4 地址 (右键使用)";
+            this.Col_IP.MinimumWidth = 8;
+            this.Col_IP.Name = "Col_IP";
+            this.Col_IP.ReadOnly = true;
+            this.Col_IP.Width = 200;
+            // 
+            // Col_ASN
+            // 
+            this.Col_ASN.HeaderText = "归属地";
+            this.Col_ASN.MinimumWidth = 8;
+            this.Col_ASN.Name = "Col_ASN";
+            this.Col_ASN.ReadOnly = true;
+            this.Col_ASN.Width = 360;
+            // 
+            // Col_TTL
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N0";
+            this.Col_TTL.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Col_TTL.HeaderText = "TTL";
+            this.Col_TTL.MinimumWidth = 8;
+            this.Col_TTL.Name = "Col_TTL";
+            this.Col_TTL.Width = 60;
+            // 
+            // Col_RoundtripTime
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N0";
+            this.Col_RoundtripTime.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Col_RoundtripTime.HeaderText = "响应时间(ms)";
+            this.Col_RoundtripTime.MinimumWidth = 8;
+            this.Col_RoundtripTime.Name = "Col_RoundtripTime";
+            this.Col_RoundtripTime.Width = 105;
+            // 
+            // Col_Speed
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Col_Speed.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Col_Speed.HeaderText = "下载速度(Mbps)";
+            this.Col_Speed.MinimumWidth = 8;
+            this.Col_Speed.Name = "Col_Speed";
+            this.Col_Speed.ReadOnly = true;
+            this.Col_Speed.Width = 120;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -2189,17 +2188,11 @@ namespace XboxDownload
         private System.Windows.Forms.ToolStripMenuItem tsmUseIP1;
         private System.Windows.Forms.ToolStripMenuItem tsmUseIP2;
         private System.Windows.Forms.ToolStripMenuItem tsmUseIP3;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Col_Check;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Col_IP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Col_ASN;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Col_TTL;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Col_RoundtripTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Col_Speed;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ComboBox cbListenIP;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.ToolStripMenuItem tsmGuide;
+        private System.Windows.Forms.ToolStripMenuItem tsmProductManual;
         private System.Windows.Forms.ToolStripMenuItem tsmAbout;
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.GroupBox gbDrive;
@@ -2251,6 +2244,12 @@ namespace XboxDownload
         private System.Windows.Forms.DataGridViewTextBoxColumn Col_InterfaceType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col_Size;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col_Mode;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Col_Check;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Col_IP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Col_ASN;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Col_TTL;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Col_RoundtripTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Col_Speed;
     }
 }
 

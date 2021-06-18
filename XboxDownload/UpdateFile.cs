@@ -177,6 +177,7 @@ namespace XboxDownload
             }
         }
 
+        internal static Boolean dlFileDone = false;
         public static void Download(string filename)
         {
             string md5 = string.Empty;
@@ -230,7 +231,7 @@ namespace XboxDownload
                 }
                 catch { }
             }
-            Form1.dlFileDone = true;
+            UpdateFile.dlFileDone = true;
         }
 
         public static string GetPathMD5(string path)
