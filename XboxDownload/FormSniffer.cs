@@ -14,12 +14,12 @@ namespace XboxDownload
             InitializeComponent();
 
             Graphics graphics = this.CreateGraphics();
-            float dpiX = graphics.DpiX / 96;
-            if (dpiX > 1)
+            float dpixRatio = graphics.DpiX / 96;
+            if (dpixRatio > 1)
             {
-                dgvGames.RowHeadersWidth = (int)(dgvGames.RowHeadersWidth * dpiX);
+                dgvGames.RowHeadersWidth = (int)(dgvGames.RowHeadersWidth * dpixRatio);
                 foreach (DataGridViewColumn col in dgvGames.Columns)
-                    col.Width = (int)(col.Width * dpiX);
+                    col.Width = (int)(col.Width * dpixRatio);
             }
         }
 

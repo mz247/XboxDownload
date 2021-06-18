@@ -33,22 +33,22 @@ namespace XboxDownload
             InitializeComponent();
 
             Graphics graphics = this.CreateGraphics();
-            float dpiX = graphics.DpiX / 96;
-            if (dpiX > 1)
+            float dpixRatio = graphics.DpiX / 96;
+            if (dpixRatio > 1)
             {
                 foreach (ColumnHeader col in lvLog.Columns)
-                    col.Width = (int)(col.Width * dpiX);
-                dgvIpList.RowHeadersWidth = (int)(dgvIpList.RowHeadersWidth * dpiX);
+                    col.Width = (int)(col.Width * dpixRatio);
+                dgvIpList.RowHeadersWidth = (int)(dgvIpList.RowHeadersWidth * dpixRatio);
                 foreach (DataGridViewColumn col in dgvIpList.Columns)
-                    col.Width = (int)(col.Width * dpiX);
-                dgvHosts.RowHeadersWidth = (int)(dgvHosts.RowHeadersWidth * dpiX);
+                    col.Width = (int)(col.Width * dpixRatio);
+                dgvHosts.RowHeadersWidth = (int)(dgvHosts.RowHeadersWidth * dpixRatio);
                 foreach (DataGridViewColumn col in dgvHosts.Columns)
-                    col.Width = (int)(col.Width * dpiX);
-                dgvDevice.RowHeadersWidth = (int)(dgvDevice.RowHeadersWidth * dpiX);
+                    col.Width = (int)(col.Width * dpixRatio);
+                dgvDevice.RowHeadersWidth = (int)(dgvDevice.RowHeadersWidth * dpixRatio);
                 foreach (DataGridViewColumn col in dgvDevice.Columns)
-                    col.Width = (int)(col.Width * dpiX);
+                    col.Width = (int)(col.Width * dpixRatio);
                 foreach (ColumnHeader col in lvSniffer.Columns)
-                    col.Width = (int)(col.Width * dpiX);
+                    col.Width = (int)(col.Width * dpixRatio);
             }
 
             dnsProxy = new DNSProxy(this);
