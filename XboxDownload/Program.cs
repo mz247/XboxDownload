@@ -128,5 +128,42 @@ namespace XboxDownload
                     : ExecutionState.SystemRequired);
             }
         }
+
+        public static class Utility
+        {
+            private const int LOGPIXELSX = 88;
+            private const int LOGPIXELSY = 90;
+
+            public static int DpiX
+            {
+                get
+                {
+                    if (Environment.OSVersion.Version.Major >= 6)
+                        SetProcessDPIAware();
+                    IntPtr hDC = GetDC(new HandleRef(null, IntPtr.Zero));
+                    return GetDeviceCaps(hDC, LOGPIXELSX);
+                }
+            }
+
+            public static int DpiY
+            {
+                get
+                {
+                    if (Environment.OSVersion.Version.Major >= 6)
+                        SetProcessDPIAware();
+                    IntPtr hDC = GetDC(new HandleRef(null, IntPtr.Zero));
+                    return GetDeviceCaps(hDC, LOGPIXELSY);
+                }
+            }
+
+            [DllImport("user32.dll")]
+            private extern static bool SetProcessDPIAware();
+
+            [DllImport("user32.dll")]
+            private extern static IntPtr GetDC(HandleRef hWnd);
+
+            [DllImport("gdi32.dll")]
+            private extern static int GetDeviceCaps(IntPtr hdc, int nIndex);
+        }
     }
 }
