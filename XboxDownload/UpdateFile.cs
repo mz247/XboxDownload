@@ -22,31 +22,31 @@ namespace XboxDownload
             Task[] tasks = new Task[3];
             tasks[0] = new Task(() =>
             {
-                SocketPackage socketPackage = ClassWeb.HttpRequest(updateUrl + exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+                SocketPackage socketPackage = ClassWeb.HttpRequest(updateUrl + UpdateFile.exeFile + ".md5", "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
                 if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
                 {
                     md5 = socketPackage.Html;
-                    Update(autoupdate, md5, updateUrl + exeFile, updateUrl + pdfFile, updateUrl + txtFile);
+                    Update(autoupdate, md5, updateUrl + UpdateFile.exeFile, updateUrl + UpdateFile.pdfFile, updateUrl + UpdateFile.txtFile);
                 }
             });
             tasks[1] = new Task(() =>
             {
                 string proxy = "https://ghproxy.com/";
-                SocketPackage socketPackage = ClassWeb.HttpRequest(proxy + ClassWeb.UrlEncode(updateUrl + exeFile + ".md5"), "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+                SocketPackage socketPackage = ClassWeb.HttpRequest(proxy + ClassWeb.UrlEncode(updateUrl + UpdateFile.exeFile + ".md5"), "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
                 if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
                 {
                     md5 = socketPackage.Html;
-                    Update(autoupdate, md5, proxy + ClassWeb.UrlEncode(updateUrl + exeFile), proxy + ClassWeb.UrlEncode(updateUrl + pdfFile), proxy + ClassWeb.UrlEncode(updateUrl + txtFile));
+                    Update(autoupdate, md5, proxy + ClassWeb.UrlEncode(updateUrl + UpdateFile.exeFile), proxy + ClassWeb.UrlEncode(updateUrl + UpdateFile.pdfFile), proxy + ClassWeb.UrlEncode(updateUrl + UpdateFile.txtFile));
                 }
             });
             tasks[2] = new Task(() =>
             {
                 string proxy = "https://mirror.ghproxy.com/";
-                SocketPackage socketPackage = ClassWeb.HttpRequest(proxy + ClassWeb.UrlEncode(updateUrl + exeFile + ".md5"), "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
+                SocketPackage socketPackage = ClassWeb.HttpRequest(proxy + ClassWeb.UrlEncode(updateUrl + UpdateFile.exeFile + ".md5"), "GET", null, null, true, false, true, null, null, null, null, null, null, null, 0, null);
                 if (string.IsNullOrEmpty(md5) && Regex.IsMatch(socketPackage.Html, @"^[A-Z0-9]{32}$"))
                 {
                     md5 = socketPackage.Html;
-                    Update(autoupdate, md5, proxy + ClassWeb.UrlEncode(updateUrl + exeFile), proxy + ClassWeb.UrlEncode(updateUrl + pdfFile), proxy + ClassWeb.UrlEncode(updateUrl + txtFile));
+                    Update(autoupdate, md5, proxy + ClassWeb.UrlEncode(updateUrl + UpdateFile.exeFile), proxy + ClassWeb.UrlEncode(updateUrl + UpdateFile.pdfFile), proxy + ClassWeb.UrlEncode(updateUrl + UpdateFile.txtFile));
                 }
             });
             Array.ForEach(tasks, x => x.Start());
@@ -213,6 +213,7 @@ namespace XboxDownload
             });
             Array.ForEach(tasks, x => x.Start());
             Task.WaitAll(tasks);
+            if (string.IsNullOrEmpty(md5)) UpdateFile.dlFileDone = true;
         }
 
         private static void Download(string filename, string url)
