@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -24,6 +25,8 @@ namespace XboxDownload
             IPEndPoint iPEndPoint = null;
             if (string.IsNullOrEmpty(Properties.Settings.Default.DnsIP))
             {
+                string priorityIp = Regex.Replace(Properties.Settings.Default.LocalIP, @"\d+$", "");
+                bool succeed = false;
                 foreach (NetworkInterface adapter in NetworkInterface.GetAllNetworkInterfaces())
                 {
                     IPInterfaceProperties adapterProperties = adapter.GetIPProperties();
@@ -31,22 +34,28 @@ namespace XboxDownload
                     {
                         if (dns.AddressFamily == AddressFamily.InterNetwork)
                         {
-                            iPEndPoint = new IPEndPoint(dns, 53);
-                            parentForm.SetTextBox(parentForm.tbDnsIP, iPEndPoint.Address.ToString());
-                            break;
+                            if (iPEndPoint == null)
+                            {
+                                iPEndPoint = new IPEndPoint(dns, 53);
+                                if (dns.ToString().StartsWith(priorityIp))
+                                {
+                                    succeed = true;
+                                    break;
+                                }
+                            }
+                            else if (dns.ToString().StartsWith(priorityIp))
+                            {
+                                iPEndPoint = new IPEndPoint(dns, 53);
+                                succeed = true;
+                                break;
+                            }
                         }
                     }
-                    if (iPEndPoint != null) break;
+                    if (succeed) break;
                 }
                 if (iPEndPoint == null)
-                {
-                    parentForm.Invoke(new Action(() =>
-                    {
-                        parentForm.pictureBox1.Image = Properties.Resources.Xbox3;
-                        MessageBox.Show("找不到DNS服务器，请自行指定DNS服务器IP.", "启用DNS服务失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }));
-                    return;
-                }
+                    iPEndPoint = new IPEndPoint(IPAddress.Parse("114.114.114.114"), 53);
+                parentForm.SetTextBox(parentForm.tbDnsIP, iPEndPoint.Address.ToString());
             }
             else
             {
