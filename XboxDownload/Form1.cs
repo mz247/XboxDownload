@@ -178,9 +178,9 @@ namespace XboxDownload
             FileInfo fi = new FileInfo(Application.StartupPath + "\\" + UpdateFile.pdfFile);
             if (!fi.Exists)
             {
-                UpdateFile.dlFileDone = false;
+                UpdateFile.bDownloadEnd = false;
                 ThreadPool.QueueUserWorkItem(delegate { UpdateFile.Download(fi.Name); });
-                while (!UpdateFile.dlFileDone)
+                while (!UpdateFile.bDownloadEnd)
                 {
                     Application.DoEvents();
                 }
@@ -766,9 +766,9 @@ namespace XboxDownload
             if (fi.Exists) update = DateTime.Compare(DateTime.Now, fi.LastWriteTime.AddHours(24)) >= 0;
             if (update)
             {
-                UpdateFile.dlFileDone = false;
+                UpdateFile.bDownloadEnd = false;
                 ThreadPool.QueueUserWorkItem(delegate { UpdateFile.Download(fi.Name); });
-                while (!UpdateFile.dlFileDone)
+                while (!UpdateFile.bDownloadEnd)
                 {
                     Application.DoEvents();
                 }
@@ -1502,9 +1502,10 @@ namespace XboxDownload
                     }
                     string CurrencyCode = json.Product.DisplaySkuAvailabilities[0].Availabilities[0].OrderManagementData.Price.CurrencyCode;
                     double MSRP = json.Product.DisplaySkuAvailabilities[0].Availabilities[0].OrderManagementData.Price.MSRP;
-                    double ListPrice = json.Product.DisplaySkuAvailabilities[0].Availabilities[0].OrderManagementData.Price.ListPrice;
-                    double ListPrice_1 = json.Product.DisplaySkuAvailabilities[0].Availabilities.Count >= 2 ? json.Product.DisplaySkuAvailabilities[0].Availabilities[1].OrderManagementData.Price.ListPrice : 0;
-                    double WholesalePrice = json.Product.DisplaySkuAvailabilities[0].Availabilities[0].OrderManagementData.Price.WholesalePrice;
+                    double ListPrice_1 = json.Product.DisplaySkuAvailabilities[0].Availabilities[0].OrderManagementData.Price.ListPrice;
+                    double ListPrice_2 = json.Product.DisplaySkuAvailabilities[0].Availabilities.Count >= 2 ? json.Product.DisplaySkuAvailabilities[0].Availabilities[1].OrderManagementData.Price.ListPrice : 0;
+                    double WholesalePrice_1 = json.Product.DisplaySkuAvailabilities[0].Availabilities[0].OrderManagementData.Price.WholesalePrice;
+                    double WholesalePrice_2 = json.Product.DisplaySkuAvailabilities[0].Availabilities.Count >= 2 ? json.Product.DisplaySkuAvailabilities[0].Availabilities[1].OrderManagementData.Price.WholesalePrice : 0;
                     this.Invoke(new Action(() =>
                     {
                         tbSnifferTitle.Text = title;
@@ -1518,12 +1519,14 @@ namespace XboxDownload
                         {
                             StringBuilder sb = new StringBuilder();
                             sb.Append(string.Format("币种: {0}, 建议零售价: {1}", CurrencyCode, String.Format("{0:N}", MSRP)));
-                            if (ListPrice > 0 && ListPrice != MSRP)
-                                sb.Append(string.Format(", 折扣{0}%: {1}", Math.Round(ListPrice / MSRP * 100, 0, MidpointRounding.AwayFromZero), String.Format("{0:N}", ListPrice)));
-                            if (ListPrice_1 > 0 && ListPrice_1 != ListPrice && ListPrice_1 != MSRP)
-                                sb.Append(string.Format(", 金会员折扣{0}%: {1}", Math.Round(ListPrice_1 / MSRP * 100, 0, MidpointRounding.AwayFromZero), String.Format("{0:N}", ListPrice_1)));
-                            if (WholesalePrice > 0)
-                                sb.Append(string.Format(", 批发价: {0}", String.Format("{0:N}", WholesalePrice)));
+                            if (ListPrice_1 > 0 && ListPrice_1 != MSRP)
+                                sb.Append(string.Format(", 折扣{0}%: {1}", Math.Round(ListPrice_1 / MSRP * 100, 0, MidpointRounding.AwayFromZero), String.Format("{0:N}", ListPrice_1)));
+                            if (ListPrice_2 > 0 && ListPrice_2 < ListPrice_1 && ListPrice_2 != MSRP)
+                                sb.Append(string.Format(", 金会员折扣{0}%: {1}", Math.Round(ListPrice_2 / MSRP * 100, 0, MidpointRounding.AwayFromZero), String.Format("{0:N}", ListPrice_2)));
+                            if (WholesalePrice_1 > 0)
+                                sb.Append(string.Format(", 批发价: {0}", String.Format("{0:N}", WholesalePrice_1)));
+                            if (WholesalePrice_2 > 0 && WholesalePrice_2 < WholesalePrice_1)
+                                sb.Append(string.Format(", 批发价折扣{0}%: {1}", Math.Round(WholesalePrice_2 / WholesalePrice_1 * 100, 0, MidpointRounding.AwayFromZero), String.Format("{0:N}", WholesalePrice_2)));
                             tbSnifferPrice.Text = sb.ToString();
                         }
                         tbSnifferDescription.Text = description;

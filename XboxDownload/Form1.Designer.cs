@@ -31,10 +31,10 @@ namespace XboxDownload
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiMinimizeTray = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,6 +89,12 @@ namespace XboxDownload
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dgvIpList = new System.Windows.Forms.DataGridView();
+            this.Col_Check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Col_IP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_ASN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_TTL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_RoundtripTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_Speed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.linkImportIP1 = new System.Windows.Forms.LinkLabel();
             this.linkTestUrl3 = new System.Windows.Forms.LinkLabel();
@@ -199,12 +205,6 @@ namespace XboxDownload
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmCopyUrl1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmCopyUrl2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.Col_Check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Col_IP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_ASN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_TTL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_RoundtripTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_Speed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -809,6 +809,61 @@ namespace XboxDownload
             this.dgvIpList.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvIpList_CellMouseDown);
             this.dgvIpList.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.Dgv_RowPostPaint);
             // 
+            // Col_Check
+            // 
+            this.Col_Check.HeaderText = "选择";
+            this.Col_Check.MinimumWidth = 8;
+            this.Col_Check.Name = "Col_Check";
+            this.Col_Check.Width = 43;
+            // 
+            // Col_IP
+            // 
+            this.Col_IP.HeaderText = "IPv4 地址 (右键使用)";
+            this.Col_IP.MinimumWidth = 8;
+            this.Col_IP.Name = "Col_IP";
+            this.Col_IP.ReadOnly = true;
+            this.Col_IP.Width = 200;
+            // 
+            // Col_ASN
+            // 
+            this.Col_ASN.HeaderText = "归属地";
+            this.Col_ASN.MinimumWidth = 8;
+            this.Col_ASN.Name = "Col_ASN";
+            this.Col_ASN.ReadOnly = true;
+            this.Col_ASN.Width = 360;
+            // 
+            // Col_TTL
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N0";
+            this.Col_TTL.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Col_TTL.HeaderText = "TTL";
+            this.Col_TTL.MinimumWidth = 8;
+            this.Col_TTL.Name = "Col_TTL";
+            this.Col_TTL.Width = 60;
+            // 
+            // Col_RoundtripTime
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N0";
+            this.Col_RoundtripTime.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Col_RoundtripTime.HeaderText = "响应时间(ms)";
+            this.Col_RoundtripTime.MinimumWidth = 8;
+            this.Col_RoundtripTime.Name = "Col_RoundtripTime";
+            this.Col_RoundtripTime.Width = 105;
+            // 
+            // Col_Speed
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Col_Speed.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Col_Speed.HeaderText = "下载速度(Mbps)";
+            this.Col_Speed.MinimumWidth = 8;
+            this.Col_Speed.Name = "Col_Speed";
+            this.Col_Speed.ReadOnly = true;
+            this.Col_Speed.Width = 120;
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.linkImportIP1);
@@ -1368,7 +1423,7 @@ namespace XboxDownload
             this.groupBox5.Size = new System.Drawing.Size(1464, 370);
             this.groupBox5.TabIndex = 1;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Xbox外置存储设备(本功能可以把Xbox外置移动硬盘转换成PC可读写的模式，需要使用Win10操作系统)";
+            this.groupBox5.Text = "Xbox外置存储设备(本功能可以把Xbox外置移动硬盘转换成PC可读写的模式，需要使用Win10操作系统，关闭腾讯电脑管家)";
             // 
             // dgvDevice
             // 
@@ -1964,61 +2019,6 @@ namespace XboxDownload
             this.tsmCopyUrl2.Size = new System.Drawing.Size(247, 30);
             this.tsmCopyUrl2.Text = "复制(.com替换为.cn)";
             this.tsmCopyUrl2.Click += new System.EventHandler(this.TsmCopyUrl2_Click);
-            // 
-            // Col_Check
-            // 
-            this.Col_Check.HeaderText = "选择";
-            this.Col_Check.MinimumWidth = 8;
-            this.Col_Check.Name = "Col_Check";
-            this.Col_Check.Width = 43;
-            // 
-            // Col_IP
-            // 
-            this.Col_IP.HeaderText = "IPv4 地址 (右键使用)";
-            this.Col_IP.MinimumWidth = 8;
-            this.Col_IP.Name = "Col_IP";
-            this.Col_IP.ReadOnly = true;
-            this.Col_IP.Width = 200;
-            // 
-            // Col_ASN
-            // 
-            this.Col_ASN.HeaderText = "归属地";
-            this.Col_ASN.MinimumWidth = 8;
-            this.Col_ASN.Name = "Col_ASN";
-            this.Col_ASN.ReadOnly = true;
-            this.Col_ASN.Width = 360;
-            // 
-            // Col_TTL
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N0";
-            this.Col_TTL.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Col_TTL.HeaderText = "TTL";
-            this.Col_TTL.MinimumWidth = 8;
-            this.Col_TTL.Name = "Col_TTL";
-            this.Col_TTL.Width = 60;
-            // 
-            // Col_RoundtripTime
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N0";
-            this.Col_RoundtripTime.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Col_RoundtripTime.HeaderText = "响应时间(ms)";
-            this.Col_RoundtripTime.MinimumWidth = 8;
-            this.Col_RoundtripTime.Name = "Col_RoundtripTime";
-            this.Col_RoundtripTime.Width = 105;
-            // 
-            // Col_Speed
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Col_Speed.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Col_Speed.HeaderText = "下载速度(Mbps)";
-            this.Col_Speed.MinimumWidth = 8;
-            this.Col_Speed.Name = "Col_Speed";
-            this.Col_Speed.ReadOnly = true;
-            this.Col_Speed.Width = 120;
             // 
             // Form1
             // 
